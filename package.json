@@ -1,31 +1,98 @@
 {
-  "name": "some-project",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-scripts": "3.1.1"
+  "name": "my-mini-trello-clone",
+  "version": "0.0.1",
+  "description": "",
+  "main": "public/index.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Antonster/my-mini-trello-clone"
   },
+  "keywords": [],
+  "author": "Antonster",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Antonster/my-mini-trello-clone/issues"
+  },
+  "homepage": "https://antonster.github.io/my-mini-trello-clone/",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "parcel ./public/index.html",
+    "lint": "eslint --debug src/",
+    "prettier": "prettier --write src/**/*.js",
+    "build": "rm -rf dist && parcel build ./public/index.html --public-url /my-mini-trello-clone && workbox generateSW workbox-config.js && cp dist/index.html dist/404.html",
+    "deploy": "npm run build && gh-pages -d dist"
+  },
+  "babel": {
+    "plugins": [
+      "@babel/plugin-proposal-class-properties"
+    ]
+  },
+  "prettier": {
+    "printWidth": 80,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "bracketSpacing": true,
+    "jsxBracketSameLine": false,
+    "semi": true,
+    "arrowParens": "always",
+    "tabWidth": 2
   },
   "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+    "env": {
+      "es6": true,
+      "browser": true,
+      "node": true
+    },
+    "extends": [
+      "airbnb",
+      "prettier"
     ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "plugins": [
+      "prettier",
+      "babel",
+      "react",
+      "import",
+      "jsx-a11y"
+    ],
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "rules": {
+      "prettier/prettier": "error"
+    }
+  },
+  "eslintIgnore": [
+    "./node_modules",
+    "./dist",
+    "./cache"
+  ],
+  "dependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-redux": "^7.1.1",
+    "react-router": "^5.0.1",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.4.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.14.3",
+    "gh-pages": "^2.1.1",
+    "parcel": "^1.12.3",
+    "prettier": "^1.18.2"
   }
 }
