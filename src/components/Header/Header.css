@@ -1,0 +1,25 @@
+.header {
+  padding: 20px 0;
+}
+
+.logo {
+  width: 65px;
+  height: 65px;
+  display: block;
+  border: none;
+  border-radius: 50%;
+  margin: 0 auto;
+  background: url('./img/logo.svg') no-repeat 50% 50%;
+  filter: drop-shadow(3px 3px 3px #333);
+  cursor: pointer;
+  transition: all 200ms ease;
+}
+
+.logo:hover {
+  filter: drop-shadow(6px 6px 6px #333);
+  transform: scale(1.1) rotate(-10deg);
+}
+
+.logo:active {
+  transform: scale(0.8) rotate(-10deg);
+}
