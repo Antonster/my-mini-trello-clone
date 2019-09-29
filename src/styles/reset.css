@@ -1,3 +1,10 @@
+/*** box sizing border-box for all elements ***/
+*,
+*::before,
+*::after {
+    box-sizing:border-box;
+}
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -11,12 +18,12 @@ article, aside, canvas, details, embed,
 figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
-  margin: 0;
+    margin: 0;
 	padding: 0;
 	border: 0;
 	font-size: 100%;
 	font: inherit;
-	vertical-align: baseline;
+    vertical-align: baseline;
 }
 
 /* make sure to set some focus styles for accessibility */
@@ -64,9 +71,6 @@ input[type=search]::-webkit-search-results-decoration {
 input[type=search] {
     -webkit-appearance: none;
     -moz-appearance: none;
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
 }
 
 textarea {
@@ -262,7 +266,6 @@ html input[disabled] {
 
 input[type="checkbox"],
 input[type="radio"] {
-    box-sizing: border-box; /* 1 */
     padding: 0; /* 2 */
     *height: 13px; /* 3 */
     *width: 13px; /* 3 */
@@ -276,9 +279,6 @@ input[type="radio"] {
 
 input[type="search"] {
     -webkit-appearance: textfield; /* 1 */
-    -moz-box-sizing: content-box;
-    -webkit-box-sizing: content-box; /* 2 */
-    box-sizing: content-box;
 }
 
 /**
