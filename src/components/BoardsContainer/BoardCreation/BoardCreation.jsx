@@ -1,7 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import store from '../../../store';
 
 import CreationButton from './CreationButton/CreationButton';
 import CreationForm from './CreationForm/CreationForm';
@@ -25,9 +24,20 @@ class BoardCreation extends React.Component {
       ).toUpperCase(),
       data: {},
     };
+
+    if (!localStorage.getItem('boardsList')) {
+      localStorage.setItem('boardsList', JSON.stringify([boardData]));
+    } else {
+      const localData = JSON.parse(localStorage.getItem('boardsList'));
+
+      localStorage.setItem(
+        'boardsList',
+        JSON.stringify([...localData, boardData])
+      );
+    }
+
     getBoardsList(boardData);
     setNewBoard(false);
-    console.log(store.getState());
   };
 
   render() {

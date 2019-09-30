@@ -1,6 +1,6 @@
 import { GET_BOARD_LIST } from '../constants';
 
-const initialState = [];
+const initialState = JSON.parse(localStorage.getItem('boardsList')) || [];
 
 export default (state = initialState, { type, boardName, id, data }) => {
   switch (type) {

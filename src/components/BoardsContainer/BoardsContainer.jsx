@@ -6,23 +6,19 @@ import './BoardsContainer.css';
 import BoardCreation from './BoardCreation/BoardCreation';
 import Board from './Board/Board';
 
-class BoardsContainer extends React.Component {
-  innerContent = () => {};
+const BoardsContainer = (props) => {
+  const { boardsList } = props;
 
-  render() {
-    const { boardsList } = this.props;
-
-    return (
-      <div className="boards_container">
-        {boardsList &&
-          boardsList.map(({ boardName, id }) => (
-            <Board boardName={boardName} id={id} key={id} />
-          ))}
-        <BoardCreation />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="boards_container">
+      {boardsList &&
+        boardsList.map(({ boardName, id }) => (
+          <Board boardName={boardName} id={id} key={id} />
+        ))}
+      <BoardCreation />
+    </div>
+  );
+};
 
 const mapStateToProps = (state) => state;
 
