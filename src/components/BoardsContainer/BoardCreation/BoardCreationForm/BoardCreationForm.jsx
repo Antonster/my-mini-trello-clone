@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 
-import './CreationForm.css';
-import renderInput from '../../../formElements/input';
+import './BoardCreationForm.css';
+import renderInput from '../../../../forms/formElements/input';
 import { setNewBoardAction } from '../../../../actions/actionsCreators';
-import { required, emptyLine } from '../../../../formValidators/formValidators';
+import {
+  requiredName,
+  emptyName,
+} from '../../../../forms/formValidators/formValidators';
 
-const CreationForm = (props) => {
+const BoardCreationForm = (props) => {
   const { setNewBoard, handleSubmit } = props;
 
   return (
@@ -35,7 +38,7 @@ const CreationForm = (props) => {
           name="boardName"
           component={renderInput}
           type="text"
-          validate={[required, emptyLine]}
+          validate={[requiredName, emptyName]}
         />
         <div className="boards_container_new_board_button_container">
           <button
@@ -66,13 +69,13 @@ const mapDispatchToProps = (dispatch) => ({
 const decoratedComponent = connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreationForm);
+)(BoardCreationForm);
 
 export default reduxForm({
   form: 'createNewBoard',
 })(decoratedComponent);
 
-CreationForm.propTypes = {
+BoardCreationForm.propTypes = {
   setNewBoard: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };

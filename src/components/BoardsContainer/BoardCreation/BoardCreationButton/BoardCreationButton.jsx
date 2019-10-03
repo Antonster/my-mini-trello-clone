@@ -2,10 +2,10 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import './CreationButton.css';
+import './BoardCreationButton.css';
 import { setNewBoardAction } from '../../../../actions/actionsCreators';
 
-const CreationButton = (props) => {
+const BoardCreationButton = (props) => {
   const { setNewBoard } = props;
 
   return (
@@ -28,8 +28,8 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CreationButton);
+)(BoardCreationButton);
 
-CreationButton.propTypes = {
+BoardCreationButton.propTypes = {
   setNewBoard: PropTypes.func.isRequired,
 };

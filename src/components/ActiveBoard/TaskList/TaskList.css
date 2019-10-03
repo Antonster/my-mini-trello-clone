@@ -1,0 +1,33 @@
+.board_container_task_list {
+  width: calc(33.3% - 20px);
+  margin: 10px;
+  padding: 10px;
+  background-color: white;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  transition: all 200ms ease-in-out;
+}
+
+.board_container_task_list_title {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.board_container_task_list_separator {
+  height: 1px;
+  width: 100%;
+  margin: 2.5px 0 10px;
+  opacity: 0.25;
+}
+
+.board_container_task_list_form_input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.board_container_task_list_form_input_error {
+  font-size: 0.8rem;
+  text-align: center;
+  padding-top: 10px;
+}
