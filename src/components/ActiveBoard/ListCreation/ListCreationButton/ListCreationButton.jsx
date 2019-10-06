@@ -1,37 +1,35 @@
 import * as React from 'react';
-// import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import './ListCreationButton.css';
-// import { setNewBoardAction } from '../../../../actions/actionsCreators';
+import { setNewListAction } from '../../../../actions/actionsCreators';
 
-const ListCreationButton = () => {
-  // const { setNewBoard } = props;
+const ListCreationButton = (props) => {
+  const { setNewList } = props;
 
   return (
     <button
-      className="board_container_new_list_button"
+      className="board_container_tasks_new_list_button"
       type="button"
-      // onClick={() => setNewBoard(true)}
+      onClick={() => setNewList(true)}
     >
       Create a new list...
     </button>
   );
 };
 
-export default ListCreationButton;
+const mapStateToProps = (state) => state;
 
-// const mapStateToProps = (state) => state;
+const mapDispatchToProps = (dispatch) => ({
+  setNewList: (status) => dispatch(setNewListAction(status)),
+});
 
-// const mapDispatchToProps = (dispatch) => ({
-//   setNewBoard: (status) => dispatch(setNewBoardAction(status)),
-// });
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ListCreationButton);
 
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(ListCreationButton);
-
-// ListCreationButton.propTypes = {
-//   setNewBoard: PropTypes.func.isRequired,
-// };
+ListCreationButton.propTypes = {
+  setNewList: PropTypes.func.isRequired,
+};

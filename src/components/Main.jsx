@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { BrowserRouter as Switch, Route } from 'react-router-dom';
 
 import Header from './Header/Header';
 import BoardsContainer from './BoardsContainer/BoardsContainer';
@@ -8,7 +9,10 @@ const Main = () => {
   return (
     <>
       <Header />
-      <ActiveBoard />
+      <Switch>
+        <Route exact path="/" component={BoardsContainer} />
+        <Route path="/:id" component={ActiveBoard} />
+      </Switch>
     </>
   );
 };

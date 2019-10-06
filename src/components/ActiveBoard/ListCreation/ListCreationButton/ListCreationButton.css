@@ -1,4 +1,4 @@
-.board_container_new_list_button {
+.board_container_tasks_new_list_button {
   width: calc(33.3% - 20px);
   margin: 10px;
   padding: 55px 0;
@@ -10,6 +10,6 @@
   transition: all 200ms ease-in-out;
 }
 
-.board_container_new_list_button:hover {
+.board_container_tasks_new_list_button:hover {
   transform: scale(1.05);
 }

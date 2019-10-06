@@ -1,7 +1,12 @@
-import { NEW_BOARD, GET_BOARD_LIST } from '../constants';
+import { NEW_BOARD, NEW_LIST, GET_BOARD_LIST } from '../constants';
 
 export const setNewBoardAction = (status) => ({
   type: NEW_BOARD,
+  status,
+});
+
+export const setNewListAction = (status) => ({
+  type: NEW_LIST,
   status,
 });
 

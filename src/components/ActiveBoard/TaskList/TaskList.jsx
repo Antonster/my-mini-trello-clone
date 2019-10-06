@@ -4,7 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 
 import './TaskList.css';
 import Task from './Task/Task';
-import renderInpot from '../../../forms/formElements/input';
+import renderInput from '../../../forms/formElements/input';
 import {
   requiredName,
   emptyName,
@@ -14,16 +14,19 @@ const TaskList = (props) => {
   const { handleSubmit } = props;
 
   return (
-    <div className="board_container_task_list">
-      <div className="board_container_task_list_title">Name</div>
-      <hr className="board_container_task_list_separator" />
-      <form onSubmit={handleSubmit} className="board_container_task_list_form">
+    <div className="board_container_tasks_task_list">
+      <div className="board_container_tasks_task_list_title">Name</div>
+      <hr className="board_container_tasks_task_list_separator" />
+      <form
+        onSubmit={handleSubmit}
+        className="board_container_tasks_task_list_form"
+      >
         <Field
-          className="board_container_task_list_form_input"
-          errorClassName="board_container_task_list_form_input_error"
+          className="board_container_tasks_task_list_form_input"
+          errorClassName="board_container_tasks_task_list_form_input_error"
           name="taskName"
           type="text"
-          component={renderInpot}
+          component={renderInput}
           validate={[requiredName, emptyName]}
         />
       </form>
@@ -32,9 +35,7 @@ const TaskList = (props) => {
   );
 };
 
-export default reduxForm({
-  form: 'createNewTask',
-})(TaskList);
+export default reduxForm()(TaskList);
 
 TaskList.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
