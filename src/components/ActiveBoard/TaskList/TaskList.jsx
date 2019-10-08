@@ -11,11 +11,11 @@ import {
 } from '../../../forms/formValidators/formValidators';
 
 const TaskList = (props) => {
-  const { handleSubmit } = props;
+  const { handleSubmit, listName } = props;
 
   return (
     <div className="board_container_tasks_task_list">
-      <div className="board_container_tasks_task_list_title">Name</div>
+      <div className="board_container_tasks_task_list_title">{listName}</div>
       <hr className="board_container_tasks_task_list_separator" />
       <form
         onSubmit={handleSubmit}
@@ -39,4 +39,5 @@ export default reduxForm()(TaskList);
 
 TaskList.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
+  listName: PropTypes.string.isRequired,
 };

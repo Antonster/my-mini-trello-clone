@@ -19,7 +19,8 @@
     "lint": "eslint --debug src/",
     "prettier": "prettier --write src/**/*.js",
     "build": "rm -rf dist && parcel build ./public/index.html --public-url /my-mini-trello-clone && workbox generateSW workbox-config.js && cp dist/index.html dist/404.html",
-    "deploy": "npm run build && gh-pages -d dist"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "babel": {
     "plugins": [
