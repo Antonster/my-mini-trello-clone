@@ -16,7 +16,7 @@ class BoardsContainer extends React.Component {
     const { setNewBoard, getBoardsList } = this.props;
     const { boardName } = value;
 
-    const boardData = {
+    getBoardsList({
       boardName,
       id: (
         Date.now().toString(36) +
@@ -25,20 +25,7 @@ class BoardsContainer extends React.Component {
           .substr(2, 5)
       ).toUpperCase(),
       data: [],
-    };
-
-    if (!localStorage.getItem('boardsList')) {
-      localStorage.setItem('boardsList', JSON.stringify([boardData]));
-    } else {
-      const localData = JSON.parse(localStorage.getItem('boardsList'));
-
-      localStorage.setItem(
-        'boardsList',
-        JSON.stringify([...localData, boardData])
-      );
-    }
-
-    getBoardsList(boardData);
+    });
     setNewBoard(false);
   };
 

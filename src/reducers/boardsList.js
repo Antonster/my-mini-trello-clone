@@ -1,4 +1,4 @@
-import { GET_BOARD_LIST, CREATE_NEW_LIST } from '../constants';
+import { GET_BOARD_LIST, CREATE_NEW_LIST, CREATE_NEW_TASK } from '../constants';
 
 const initialState = JSON.parse(localStorage.getItem('boardsList')) || [];
 
@@ -10,13 +10,29 @@ export default (state = initialState, action) => {
       return [...state, { boardName, id, data }];
     }
     case CREATE_NEW_LIST: {
-      const { activeBoardId, listName, id, tasks } = action;
-      const boardIndex = state.findIndex((board) => board.id === activeBoardId);
+      const { activeBoardIndex, listName, id, tasks } = action;
 
-      state[boardIndex].data.push({
+      state[activeBoardIndex].data.push({
         listName,
         id,
         tasks,
+      });
+
+      return [...state];
+    }
+    case CREATE_NEW_TASK: {
+      const {
+        activeBoardIndex,
+        activeListIndex,
+        taskName,
+        id,
+        isComplete,
+      } = action;
+
+      state[activeBoardIndex].data[activeListIndex].tasks.push({
+        taskName,
+        id,
+        isComplete,
       });
 
       return [...state];

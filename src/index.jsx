@@ -5,6 +5,13 @@ import { Provider } from 'react-redux';
 import store from './store';
 import Main from './components/Main';
 
+store.subscribe(() => {
+  localStorage.setItem(
+    'boardsList',
+    JSON.stringify(store.getState().boardsList)
+  );
+});
+
 console.log(store.getState());
 ReactDOM.render(
   <Provider store={store}>

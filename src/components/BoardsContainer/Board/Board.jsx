@@ -6,7 +6,7 @@ import './Board.css';
 
 const Board = ({ boardName, id }) => {
   return (
-    <Link to={`/${id}`} className="content_board_button">
+    <Link to={`/${id}`} id={id} className="content_board_button">
       {boardName}
     </Link>
   );

@@ -1,8 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { reset } from 'redux-form';
-import store from '../../store';
 
 import './ActiveBoard.css';
 import TaskList from './TaskList/TaskList';
@@ -11,64 +9,54 @@ import ListCreationForm from './ListCreation/ListCreationForm/ListCreationForm';
 import {
   setNewListAction,
   createNewListAction,
+  setActiveBoardAction,
 } from '../../actions/actionsCreators';
 
 class ActiveBoard extends React.Component {
-  constructor(props) {
-    super(props);
+  componentDidMount() {
     const {
+      setActiveBoard,
       boardsList,
       match: {
         params: { id },
       },
     } = this.props;
 
-    this.activeBoard = boardsList.find((board) => board.id === id);
+    const activeBoard = boardsList.find((board) => board.id === id);
+    const activeBoardIndex = boardsList.findIndex((board) => board.id === id);
+
+    setActiveBoard({ ...activeBoard, index: activeBoardIndex });
   }
 
   showNewListData = (value) => {
     const {
-      activeBoard: { id },
-      props: { createNewList, setNewList },
-    } = this;
+      createNewList,
+      setNewList,
+      activeBoard: { index },
+    } = this.props;
     const { listName } = value;
-    const localData = JSON.parse(localStorage.getItem('boardsList'));
-    const listData = {
+
+    createNewList({
+      activeBoardIndex: index,
       listName,
       id: (
         Date.now().toString(36) +
         Math.random()
           .toString(36)
-          .substr(2, 9)
+          .substr(2, 7)
       ).toUpperCase(),
       tasks: [],
-    };
-
-    createNewList({
-      activeBoardId: id,
-      ...listData,
     });
     setNewList(false);
-
-    const boardIndex = localData.findIndex((board) => board.id === id);
-
-    localData[boardIndex].data.push(listData);
-    localStorage.setItem('boardsList', JSON.stringify([...localData]));
-  };
-
-  showNewTaskData = (value) => {
-    const { clearForm } = this.props;
-
-    console.log(value);
-    clearForm('createNewTask');
   };
 
   render() {
     const {
-      showNewTaskData,
       showNewListData,
-      activeBoard: { boardName, data },
-      props: { newList },
+      props: {
+        newList,
+        activeBoard: { boardName, data, index },
+      },
     } = this;
 
     return (
@@ -78,11 +66,10 @@ class ActiveBoard extends React.Component {
           {data &&
             data.map(({ listName, id }) => (
               <TaskList
-                id={id}
+                ListId={id}
                 key={id}
-                form={`form:${id}`}
                 listName={listName}
-                onSubmit={showNewTaskData}
+                activeBoardIndex={index}
               />
             ))}
           {newList ? (
@@ -99,7 +86,7 @@ class ActiveBoard extends React.Component {
 const mapStateToProps = (state) => state;
 
 const mapDispatchToProps = (dispatch) => ({
-  clearForm: (formName) => dispatch(reset(formName)),
+  setActiveBoard: (boardData) => dispatch(setActiveBoardAction(boardData)),
   setNewList: (status) => dispatch(setNewListAction(status)),
   createNewList: (newListData) => dispatch(createNewListAction(newListData)),
 });
@@ -110,10 +97,11 @@ export default connect(
 )(ActiveBoard);
 
 ActiveBoard.propTypes = {
-  clearForm: PropTypes.func.isRequired,
+  setActiveBoard: PropTypes.func.isRequired,
   setNewList: PropTypes.func.isRequired,
   createNewList: PropTypes.func.isRequired,
   newList: PropTypes.bool.isRequired,
   boardsList: PropTypes.array.isRequired,
   match: PropTypes.object.isRequired,
+  activeBoard: PropTypes.object.isRequired,
 };
