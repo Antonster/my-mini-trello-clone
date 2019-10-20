@@ -11,7 +11,7 @@ const Main = () => {
       <Header />
       <Switch>
         <Route exact path="/" component={BoardsContainer} />
-        <Route path="/:id" component={ActiveBoard} />
+        <Route path="/:boardId" component={ActiveBoard} />
       </Switch>
     </>
   );

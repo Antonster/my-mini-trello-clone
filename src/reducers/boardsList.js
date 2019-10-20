@@ -1,41 +1,86 @@
-import { GET_BOARD_LIST, CREATE_NEW_LIST, CREATE_NEW_TASK } from '../constants';
+import {
+  CREATE_NEW_BOARD,
+  CREATE_NEW_LIST,
+  CREATE_NEW_TASK,
+  SET_TASK_STATUS,
+} from '../constants';
 
 const initialState = JSON.parse(localStorage.getItem('boardsList')) || [];
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case GET_BOARD_LIST: {
-      const { boardName, id, data } = action;
+    case CREATE_NEW_BOARD: {
+      const { boardData } = action;
 
-      return [...state, { boardName, id, data }];
+      return [...state, boardData];
     }
     case CREATE_NEW_LIST: {
-      const { activeBoardIndex, listName, id, tasks } = action;
+      const { activeBoardId, listData } = action;
 
-      state[activeBoardIndex].data.push({
-        listName,
-        id,
-        tasks,
+      return state.map((board) => {
+        if (board.boardId === activeBoardId) {
+          return {
+            ...board,
+            data: [...board.data, listData],
+          };
+        }
+        return board;
       });
-
-      return [...state];
     }
     case CREATE_NEW_TASK: {
+      const { activeBoardId, activeTasksListId, taskData } = action;
+
+      return state.map((board) => {
+        if (board.boardId === activeBoardId) {
+          return {
+            ...board,
+            data: board.data.map((list) => {
+              if (list.listId === activeTasksListId) {
+                return {
+                  ...list,
+                  tasks: [...list.tasks, taskData],
+                };
+              }
+              return list;
+            }),
+          };
+        }
+        return board;
+      });
+    }
+    case SET_TASK_STATUS: {
       const {
-        activeBoardIndex,
-        activeListIndex,
-        taskName,
-        id,
-        isComplete,
+        activeBoardId,
+        activeTasksListId,
+        activeTaskId,
+        isCompleted,
       } = action;
 
-      state[activeBoardIndex].data[activeListIndex].tasks.push({
-        taskName,
-        id,
-        isComplete,
+      return state.map((board) => {
+        if (board.boardId === activeBoardId) {
+          return {
+            ...board,
+            data: board.data.map((list) => {
+              if (list.listId === activeTasksListId) {
+                return {
+                  ...list,
+                  tasks: list.tasks.map((task) => {
+                    if (task.taskId === activeTaskId) {
+                      return {
+                        ...task,
+                        isCompleted,
+                      };
+                    }
+                    return task;
+                  }),
+                };
+              }
+              return list;
+            }),
+          };
+        }
+        return board;
       });
-
-      return [...state];
     }
     default:
       return state;

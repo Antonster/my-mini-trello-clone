@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 import './Board.css';
 
-const Board = ({ boardName, id }) => {
+const Board = ({ boardName, boardId }) => {
   return (
-    <Link to={`/${id}`} id={id} className="content_board_button">
+    <Link to={`/${boardId}`} id={boardId} className="content_board_button">
       {boardName}
     </Link>
   );
@@ -16,5 +16,5 @@ export default Board;
 
 Board.propTypes = {
   boardName: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
+  boardId: PropTypes.string.isRequired,
 };

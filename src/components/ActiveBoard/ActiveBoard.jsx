@@ -9,54 +9,46 @@ import ListCreationForm from './ListCreation/ListCreationForm/ListCreationForm';
 import {
   setNewListAction,
   createNewListAction,
-  setActiveBoardAction,
 } from '../../actions/actionsCreators';
 
 class ActiveBoard extends React.Component {
-  componentDidMount() {
+  showNewListData = ({ listName }) => {
     const {
-      setActiveBoard,
-      boardsList,
-      match: {
-        params: { id },
-      },
-    } = this.props;
-
-    const activeBoard = boardsList.find((board) => board.id === id);
-    const activeBoardIndex = boardsList.findIndex((board) => board.id === id);
-
-    setActiveBoard({ ...activeBoard, index: activeBoardIndex });
-  }
-
-  showNewListData = (value) => {
-    const {
-      createNewList,
-      setNewList,
-      activeBoard: { index },
-    } = this.props;
-    const { listName } = value;
+      activeBoard: { boardId },
+      props: { createNewList, setNewList },
+    } = this;
 
     createNewList({
-      activeBoardIndex: index,
-      listName,
-      id: (
-        Date.now().toString(36) +
-        Math.random()
-          .toString(36)
-          .substr(2, 7)
-      ).toUpperCase(),
-      tasks: [],
+      activeBoardId: boardId,
+      listData: {
+        listName,
+        listId: (
+          Date.now().toString(36) +
+          Math.random()
+            .toString(36)
+            .substr(2, 7)
+        ).toUpperCase(),
+        tasks: [],
+      },
     });
     setNewList(false);
   };
 
   render() {
     const {
-      showNewListData,
-      props: {
-        newList,
-        activeBoard: { boardName, data, index },
+      boardsList,
+      newList,
+      match: {
+        params: { boardId },
       },
+    } = this.props;
+
+    this.activeBoard = boardsList.find((board) => board.boardId === boardId);
+
+    const {
+      showNewListData,
+      activeBoard,
+      activeBoard: { boardName, data },
     } = this;
 
     return (
@@ -64,12 +56,12 @@ class ActiveBoard extends React.Component {
         <div className="board_container_board_name">{boardName}</div>
         <div className="board_container_tasks">
           {data &&
-            data.map(({ listName, id }) => (
+            data.map(({ listName, listId }) => (
               <TaskList
-                ListId={id}
-                key={id}
+                listId={listId}
+                key={listId}
                 listName={listName}
-                activeBoardIndex={index}
+                activeBoard={activeBoard}
               />
             ))}
           {newList ? (
@@ -86,9 +78,8 @@ class ActiveBoard extends React.Component {
 const mapStateToProps = (state) => state;
 
 const mapDispatchToProps = (dispatch) => ({
-  setActiveBoard: (boardData) => dispatch(setActiveBoardAction(boardData)),
   setNewList: (status) => dispatch(setNewListAction(status)),
-  createNewList: (newListData) => dispatch(createNewListAction(newListData)),
+  createNewList: (listData) => dispatch(createNewListAction(listData)),
 });
 
 export default connect(
@@ -97,11 +88,9 @@ export default connect(
 )(ActiveBoard);
 
 ActiveBoard.propTypes = {
-  setActiveBoard: PropTypes.func.isRequired,
   setNewList: PropTypes.func.isRequired,
   createNewList: PropTypes.func.isRequired,
   newList: PropTypes.bool.isRequired,
   boardsList: PropTypes.array.isRequired,
   match: PropTypes.object.isRequired,
-  activeBoard: PropTypes.object.isRequired,
 };

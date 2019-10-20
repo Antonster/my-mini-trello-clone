@@ -4,19 +4,24 @@ import PropTypes from 'prop-types';
 import './Task.css';
 
 const Task = (props) => {
-  const { id, taskName, isComplete } = props;
+  const { taskId, taskName, isCompleted, newTaskStatus } = props;
 
   return (
     <div
-      id={id}
+      id={taskId}
       className={
-        isComplete
+        isCompleted
           ? 'board_container_task_list_task completed'
           : 'board_container_task_list_task'
       }
     >
       <div className="board_container_task_list_task_name">{taskName}</div>
-      <button className="board_container_task_list_task_button" type="button">
+      <button
+        id={`button:${taskId}`}
+        className="board_container_task_list_task_button"
+        type="button"
+        onClick={newTaskStatus}
+      >
         ✓
       </button>
     </div>
@@ -26,7 +31,8 @@ const Task = (props) => {
 export default Task;
 
 Task.propTypes = {
-  id: PropTypes.string.isRequired,
+  newTaskStatus: PropTypes.func.isRequired,
+  taskId: PropTypes.string.isRequired,
   taskName: PropTypes.string.isRequired,
-  isComplete: PropTypes.bool.isRequired,
+  isCompleted: PropTypes.bool.isRequired,
 };

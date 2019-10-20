@@ -12,13 +12,12 @@ import {
 } from '../../actions/actionsCreators';
 
 class BoardsContainer extends React.Component {
-  showResults = (value) => {
+  showResults = ({ boardName }) => {
     const { setNewBoard, getBoardsList } = this.props;
-    const { boardName } = value;
 
     getBoardsList({
       boardName,
-      id: (
+      boardId: (
         Date.now().toString(36) +
         Math.random()
           .toString(36)
@@ -38,8 +37,8 @@ class BoardsContainer extends React.Component {
     return (
       <div className="boards_container">
         {boardsList &&
-          boardsList.map(({ boardName, id }) => (
-            <Board boardName={boardName} id={id} key={id} />
+          boardsList.map(({ boardName, boardId }) => (
+            <Board boardName={boardName} boardId={boardId} key={boardId} />
           ))}
         {newBoard ? (
           <BoardCreationForm onSubmit={showResults} />
