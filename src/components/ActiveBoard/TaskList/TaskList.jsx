@@ -2,6 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { reset } from 'redux-form';
+import { Droppable } from 'react-beautiful-dnd';
 
 import './TaskList.css';
 import Task from './Task/Task';
@@ -85,27 +86,40 @@ class TaskList extends React.Component {
     } = this;
 
     return (
-      <div id={listId} className="board_container_tasks_task_list">
-        <div className="board_container_tasks_task_list_title">{listName}</div>
-        <hr className="board_container_tasks_task_list_separator" />
-        <TaskCreationForm
-          onSubmit={(value) => {
-            showNewTaskData(value);
-            clearForm(`form:${listId}`);
-          }}
-          form={`form:${listId}`}
-        />
-        {tasks &&
-          tasks.map(({ taskName, taskId, isCompleted }) => (
-            <Task
-              taskId={taskId}
-              key={taskId}
-              taskName={taskName}
-              isCompleted={isCompleted}
-              newTaskStatus={newTaskStatus}
+      <Droppable droppableId={listId}>
+        {(provided) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            id={listId}
+            className="board_container_tasks_task_list"
+          >
+            <div className="board_container_tasks_task_list_title">
+              {listName}
+            </div>
+            <hr className="board_container_tasks_task_list_separator" />
+            <TaskCreationForm
+              onSubmit={(value) => {
+                showNewTaskData(value);
+                clearForm(`form:${listId}`);
+              }}
+              form={`form:${listId}`}
             />
-          ))}
-      </div>
+            {tasks &&
+              tasks.map(({ taskName, taskId, isCompleted }, index) => (
+                <Task
+                  taskId={taskId}
+                  key={taskId}
+                  taskName={taskName}
+                  isCompleted={isCompleted}
+                  newTaskStatus={newTaskStatus}
+                  index={index}
+                />
+              ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
     );
   }
 }

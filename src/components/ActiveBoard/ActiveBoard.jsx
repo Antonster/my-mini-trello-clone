@@ -1,6 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 import './ActiveBoard.css';
 import TaskList from './TaskList/TaskList';
@@ -34,6 +35,8 @@ class ActiveBoard extends React.Component {
     setNewList(false);
   };
 
+  onDragEnd = () => {};
+
   render() {
     const {
       boardsList,
@@ -48,29 +51,32 @@ class ActiveBoard extends React.Component {
     const {
       showNewListData,
       activeBoard,
+      onDragEnd,
       activeBoard: { boardName, data },
     } = this;
 
     return (
-      <div className="board_container">
-        <div className="board_container_board_name">{boardName}</div>
-        <div className="board_container_tasks">
-          {data &&
-            data.map(({ listName, listId }) => (
-              <TaskList
-                listId={listId}
-                key={listId}
-                listName={listName}
-                activeBoard={activeBoard}
-              />
-            ))}
-          {newList ? (
-            <ListCreationForm onSubmit={showNewListData} />
-          ) : (
-            <ListCreationButton />
-          )}
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div className="board_container">
+          <div className="board_container_board_name">{boardName}</div>
+          <div className="board_container_tasks">
+            {data &&
+              data.map(({ listName, listId }) => (
+                <TaskList
+                  listId={listId}
+                  key={listId}
+                  listName={listName}
+                  activeBoard={activeBoard}
+                />
+              ))}
+            {newList ? (
+              <ListCreationForm onSubmit={showNewListData} />
+            ) : (
+              <ListCreationButton />
+            )}
+          </div>
         </div>
-      </div>
+      </DragDropContext>
     );
   }
 }
