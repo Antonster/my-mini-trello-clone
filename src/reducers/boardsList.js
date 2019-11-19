@@ -3,6 +3,7 @@ import {
   CREATE_NEW_LIST,
   CREATE_NEW_TASK,
   SET_TASK_STATUS,
+  DRAG_HAPPENED,
 } from '../constants';
 
 const initialState = JSON.parse(localStorage.getItem('boardsList')) || [];
@@ -73,6 +74,62 @@ export default (state = initialState, action) => {
                     }
                     return task;
                   }),
+                };
+              }
+              return list;
+            }),
+          };
+        }
+        return board;
+      });
+    }
+    case DRAG_HAPPENED: {
+      const {
+        activeBoardId,
+        droppableIdStart,
+        droppableIdEnd,
+        droppableIndexStart,
+        droppableIndexEnd,
+        droppableId,
+      } = action;
+
+      return state.map((board) => {
+        if (board.boardId === activeBoardId) {
+          const droppableTask = board.data
+            .find((list) => list.listId === droppableIdStart)
+            .tasks.find((task) => task.taskId === droppableId);
+
+          return {
+            ...board,
+            data: board.data.map((list) => {
+              const newTasks = list.tasks.slice();
+
+              if (
+                list.listId === droppableIdStart &&
+                droppableIdStart === droppableIdEnd
+              ) {
+                newTasks.splice(droppableIndexStart, 1);
+                newTasks.splice(droppableIndexEnd, 0, droppableTask);
+
+                return {
+                  ...list,
+                  tasks: newTasks,
+                };
+              }
+              if (list.listId === droppableIdStart) {
+                newTasks.splice(droppableIndexStart, 1);
+
+                return {
+                  ...list,
+                  tasks: newTasks,
+                };
+              }
+              if (list.listId === droppableIdEnd) {
+                newTasks.splice(droppableIndexEnd, 0, droppableTask);
+
+                return {
+                  ...list,
+                  tasks: newTasks,
                 };
               }
               return list;

@@ -5,6 +5,7 @@ import {
   CREATE_NEW_LIST,
   CREATE_NEW_TASK,
   SET_TASK_STATUS,
+  DRAG_HAPPENED,
 } from '../constants';
 
 export const setNewBoardAction = (status) => ({
@@ -50,4 +51,21 @@ export const setTaskStatusAction = ({
   activeTasksListId,
   activeTaskId,
   isCompleted,
+});
+
+export const dragHappenedAction = ({
+  activeBoardId,
+  droppableIdStart,
+  droppableIdEnd,
+  droppableIndexStart,
+  droppableIndexEnd,
+  droppableId,
+}) => ({
+  type: DRAG_HAPPENED,
+  activeBoardId,
+  droppableIdStart,
+  droppableIdEnd,
+  droppableIndexStart,
+  droppableIndexEnd,
+  droppableId,
 });

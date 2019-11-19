@@ -43,4 +43,5 @@ Task.propTypes = {
   taskId: PropTypes.string.isRequired,
   taskName: PropTypes.string.isRequired,
   isCompleted: PropTypes.bool.isRequired,
+  index: PropTypes.number.isRequired,
 };

@@ -10,6 +10,7 @@ import ListCreationForm from './ListCreation/ListCreationForm/ListCreationForm';
 import {
   setNewListAction,
   createNewListAction,
+  dragHappenedAction,
 } from '../../actions/actionsCreators';
 
 class ActiveBoard extends React.Component {
@@ -35,7 +36,24 @@ class ActiveBoard extends React.Component {
     setNewList(false);
   };
 
-  onDragEnd = () => {};
+  onDragEnd = (result) => {
+    const {
+      activeBoard: { boardId },
+      props: { dragHappened },
+    } = this;
+    const { destination, source, draggableId } = result;
+
+    if (destination) {
+      dragHappened({
+        activeBoardId: boardId,
+        droppableIdStart: source.droppableId,
+        droppableIdEnd: destination.droppableId,
+        droppableIndexStart: source.index,
+        droppableIndexEnd: destination.index,
+        droppableId: draggableId,
+      });
+    }
+  };
 
   render() {
     const {
@@ -86,6 +104,7 @@ const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => ({
   setNewList: (status) => dispatch(setNewListAction(status)),
   createNewList: (listData) => dispatch(createNewListAction(listData)),
+  dragHappened: (data) => dispatch(dragHappenedAction(data)),
 });
 
 export default connect(
@@ -96,6 +115,7 @@ export default connect(
 ActiveBoard.propTypes = {
   setNewList: PropTypes.func.isRequired,
   createNewList: PropTypes.func.isRequired,
+  dragHappened: PropTypes.func.isRequired,
   newList: PropTypes.bool.isRequired,
   boardsList: PropTypes.array.isRequired,
   match: PropTypes.object.isRequired,
