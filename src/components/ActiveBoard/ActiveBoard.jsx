@@ -2,16 +2,40 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { DragDropContext } from 'react-beautiful-dnd';
+import styled from 'styled-components';
 
-import './ActiveBoard.css';
 import TaskList from './TaskList/TaskList';
-import ListCreationButton from './ListCreation/ListCreationButton/ListCreationButton';
-import ListCreationForm from './ListCreation/ListCreationForm/ListCreationForm';
+import ListCreationButton from './ListCreation/ListCreationButton';
+import ListCreationForm from './ListCreation/ListCreationForm';
 import {
   setNewListAction,
   createNewListAction,
   dragHappenedAction,
 } from '../../actions/actionsCreators';
+
+const BoardContainer = styled.div`
+  padding: 0 10%;
+`;
+
+const BoardName = styled.div`
+  display: inline-block;
+  padding: 20px 60px;
+  margin: 20px 0;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.8rem;
+  text-shadow: 0px 0px 3px #000;
+  background-color: #9fe7a4;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+`;
+
+const ListsContainer = styled.div`
+  padding: 50px 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+`;
 
 class ActiveBoard extends React.Component {
   showNewListData = ({ listName }) => {
@@ -75,9 +99,9 @@ class ActiveBoard extends React.Component {
 
     return (
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="board_container">
-          <div className="board_container_board_name">{boardName}</div>
-          <div className="board_container_tasks">
+        <BoardContainer>
+          <BoardName>{boardName}</BoardName>
+          <ListsContainer>
             {data &&
               data.map(({ listName, listId }) => (
                 <TaskList
@@ -92,8 +116,8 @@ class ActiveBoard extends React.Component {
             ) : (
               <ListCreationButton />
             )}
-          </div>
-        </div>
+          </ListsContainer>
+        </BoardContainer>
       </DragDropContext>
     );
   }

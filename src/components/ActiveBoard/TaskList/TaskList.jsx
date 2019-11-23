@@ -3,14 +3,40 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { reset } from 'redux-form';
 import { Droppable } from 'react-beautiful-dnd';
+import styled from 'styled-components';
 
-import './TaskList.css';
-import Task from './Task/Task';
-import TaskCreationForm from './TaskCreationForm/TaskCreationForm';
+import Task from './TaskCreation/Task';
+import TaskCreationForm from './TaskCreation/TaskCreationForm';
 import {
   createNewTaskAction,
   setTaskStatusAction,
 } from '../../../actions/actionsCreators';
+
+const TasksList = styled.div`
+  width: calc(33.3% - 20px);
+  margin: 10px;
+  padding: 10px;
+  background-color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  transition: all 200ms ease-in-out;
+`;
+
+const TasksListTitle = styled.div`
+  margin: 20px 0;
+  text-align: center;
+`;
+
+const TasksListSeparator = styled.hr`
+  height: 1px;
+  width: 100%;
+  margin: 2.5px 0 10px;
+  opacity: 0.25;
+`;
+
+const TasksListInnerContainer = styled.div`
+  width: 100%;
+  min-height: 40px;
+`;
 
 class TaskList extends React.Component {
   showNewTaskData = ({ taskName }) => {
@@ -86,40 +112,39 @@ class TaskList extends React.Component {
     } = this;
 
     return (
-      <Droppable droppableId={listId}>
-        {(provided) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-            id={listId}
-            className="board_container_tasks_task_list"
-          >
-            <div className="board_container_tasks_task_list_title">
-              {listName}
-            </div>
-            <hr className="board_container_tasks_task_list_separator" />
-            <TaskCreationForm
-              onSubmit={(value) => {
-                showNewTaskData(value);
-                clearForm(`form:${listId}`);
-              }}
-              form={`form:${listId}`}
-            />
-            {tasks &&
-              tasks.map(({ taskName, taskId, isCompleted }, index) => (
-                <Task
-                  taskId={taskId}
-                  key={taskId}
-                  taskName={taskName}
-                  isCompleted={isCompleted}
-                  newTaskStatus={newTaskStatus}
-                  index={index}
-                />
-              ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
+      <TasksList>
+        <TasksListTitle>{listName}</TasksListTitle>
+        <TasksListSeparator />
+        <TaskCreationForm
+          onSubmit={(value) => {
+            showNewTaskData(value);
+            clearForm(`form:${listId}`);
+          }}
+          form={`form:${listId}`}
+        />
+        <Droppable droppableId={listId}>
+          {(provided) => (
+            <TasksListInnerContainer
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              id={listId}
+            >
+              {tasks &&
+                tasks.map(({ taskName, taskId, isCompleted }, index) => (
+                  <Task
+                    taskId={taskId}
+                    key={taskId}
+                    taskName={taskName}
+                    isCompleted={isCompleted}
+                    newTaskStatus={newTaskStatus}
+                    index={index}
+                  />
+                ))}
+              {provided.placeholder}
+            </TasksListInnerContainer>
+          )}
+        </Droppable>
+      </TasksList>
     );
   }
 }

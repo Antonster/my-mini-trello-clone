@@ -1,15 +1,22 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import './BoardsContainer.css';
 import Board from './Board/Board';
-import BoardCreationButton from './BoardCreation/BoardCreationButton/BoardCreationButton';
-import BoardCreationForm from './BoardCreation/BoardCreationForm/BoardCreationForm';
+import BoardCreationButton from './BoardCreation/BoardCreationButton';
+import BoardCreationForm from './BoardCreation/BoardCreationForm';
 import {
   setNewBoardAction,
   getBoardsListAction,
 } from '../../actions/actionsCreators';
+
+const BoardsContainerBlock = styled.div`
+  padding: 5%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+`;
 
 class BoardsContainer extends React.Component {
   showResults = ({ boardName }) => {
@@ -35,7 +42,7 @@ class BoardsContainer extends React.Component {
     } = this;
 
     return (
-      <div className="boards_container">
+      <BoardsContainerBlock>
         {boardsList &&
           boardsList.map(({ boardName, boardId }) => (
             <Board boardName={boardName} boardId={boardId} key={boardId} />
@@ -45,7 +52,7 @@ class BoardsContainer extends React.Component {
         ) : (
           <BoardCreationButton />
         )}
-      </div>
+      </BoardsContainerBlock>
     );
   }
 }
