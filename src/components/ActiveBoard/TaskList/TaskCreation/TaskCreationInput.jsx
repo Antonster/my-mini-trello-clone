@@ -5,30 +5,43 @@ import styled from 'styled-components';
 const Input = styled.input`
   width: 100%;
   padding: 10px;
+  margin: 10px 0;
   border-radius: 5px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: ${(props) =>
+    props.activeInput
+      ? `0 3px 6px rgba(188, 0, 0, 0.45),
+  0 3px 6px rgba(188, 0, 0, 0.45)`
+      : `0 3px 6px rgba(0, 0, 0, 0.16),
+  0 3px 6px rgba(0, 0, 0, 0.23)`};
 `;
 
-const Error = styled.p`
-  font-size: 0.8rem;
-  text-align: center;
-  padding-top: 10px;
-`;
+class TaskCreationInput extends React.Component {
+  getErrorStyles = () => {
+    const {
+      meta: { touched, active, error },
+    } = this.props;
 
-const TaskCreationInput = (props) => {
-  const {
-    input,
-    type,
-    meta: { touched, active, error },
-  } = props;
+    if (touched && active && error) {
+      return true;
+    }
+    return false;
+  };
 
-  return (
-    <div>
-      <Input {...input} type={type} autoComplete="off" />
-      {touched && active && error && <Error>{error}</Error>}
-    </div>
-  );
-};
+  render() {
+    const { input, type } = this.props;
+
+    return (
+      <div>
+        <Input
+          {...input}
+          type={type}
+          autoComplete="off"
+          activeInput={this.getErrorStyles()}
+        />
+      </div>
+    );
+  }
+}
 
 export default TaskCreationInput;
 

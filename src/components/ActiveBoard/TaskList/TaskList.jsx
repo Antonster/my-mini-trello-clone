@@ -35,7 +35,9 @@ const TasksListSeparator = styled.hr`
 
 const TasksListInnerContainer = styled.div`
   width: 100%;
-  min-height: 40px;
+  min-height: 30px;
+  background-color: ${(props) =>
+    props.isDraggingOver ? 'rgba(247, 247, 116, 0.25)' : 'white'};
 `;
 
 class TaskList extends React.Component {
@@ -123,11 +125,12 @@ class TaskList extends React.Component {
           form={`form:${listId}`}
         />
         <Droppable droppableId={listId}>
-          {(provided) => (
+          {(provided, snapshot) => (
             <TasksListInnerContainer
               ref={provided.innerRef}
               {...provided.droppableProps}
               id={listId}
+              isDraggingOver={snapshot.isDraggingOver}
             >
               {tasks &&
                 tasks.map(({ taskName, taskId, isCompleted }, index) => (

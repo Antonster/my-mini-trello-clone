@@ -13,11 +13,12 @@ const TaskBlock = styled.div`
   border-radius: 5px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   background-color: ${(props) =>
-    props.isCompleted ? 'rgb(222, 202, 255)' : 'rgb(202, 255, 222)'};
+    props.isCompleted ? 'rgb(243, 236, 255)' : 'rgb(202, 255, 222)'};
   text-decoration: ${(props) => (props.isCompleted ? 'line-through' : 'none')};
-  opacity: ${(props) => (props.isCompleted ? '0.35' : '1')};
+  color: ${(props) =>
+    props.isCompleted ? 'rgba(0, 0, 0, 0.35)' : 'rgba(0, 0, 0, 1)'};
 `;
-
+// rgb(243, 236, 255)
 const TaskButton = styled.div`
   background: none;
   transition: all 200ms ease-in-out;
