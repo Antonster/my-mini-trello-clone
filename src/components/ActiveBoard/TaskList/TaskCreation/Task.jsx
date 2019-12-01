@@ -18,7 +18,7 @@ const TaskBlock = styled.div`
   color: ${(props) =>
     props.isCompleted ? 'rgba(0, 0, 0, 0.35)' : 'rgba(0, 0, 0, 1)'};
 `;
-// rgb(243, 236, 255)
+
 const TaskButton = styled.div`
   background: none;
   transition: all 200ms ease-in-out;
@@ -28,6 +28,10 @@ const TaskButton = styled.div`
   &:hover {
     transform: scale(1.3);
   }
+`;
+
+const TaskName = styled.p`
+  word-break: break-word;
 `;
 
 const Task = (props) => {
@@ -43,7 +47,7 @@ const Task = (props) => {
           id={taskId}
           isCompleted={isCompleted}
         >
-          <div>{taskName}</div>
+          <TaskName>{taskName}</TaskName>
           <TaskButton
             id={`button:${taskId}`}
             type="button"

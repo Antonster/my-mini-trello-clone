@@ -24,6 +24,7 @@ const TasksList = styled.div`
 const TasksListTitle = styled.div`
   margin: 20px 0;
   text-align: center;
+  word-break: break-word;
 `;
 
 const TasksListSeparator = styled.hr`
@@ -35,6 +36,8 @@ const TasksListSeparator = styled.hr`
 
 const TasksListInnerContainer = styled.div`
   width: 100%;
+  padding: 0 5px;
+  border-radius: 5px;
   min-height: 30px;
   background-color: ${(props) =>
     props.isDraggingOver ? 'rgba(247, 247, 116, 0.25)' : 'white'};

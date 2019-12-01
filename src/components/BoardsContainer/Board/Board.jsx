@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 const NavItem = styled(Link)`
   text-align: center;
+  word-break: break-word;
   width: calc(33.3% - 20px);
   margin: 10px;
   padding: 55px 0;
