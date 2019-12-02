@@ -12,7 +12,8 @@ const CreationButton = styled.button`
   border-radius: 5px;
   background-color: #0a2c74;
   color: white;
-  font-weight: bold;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   transition: all 200ms ease-in-out;
 

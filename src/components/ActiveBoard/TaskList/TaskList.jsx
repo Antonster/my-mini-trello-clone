@@ -15,7 +15,7 @@ import {
 const TasksList = styled.div`
   width: calc(33.3% - 20px);
   margin: 10px;
-  padding: 10px;
+  padding: 5px;
   background-color: white;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   transition: all 200ms ease-in-out;
@@ -38,12 +38,33 @@ const TasksListInnerContainer = styled.div`
   width: 100%;
   padding: 0 5px;
   border-radius: 5px;
-  min-height: 30px;
+  min-height: ${(props) => (props.isDraggingOver ? '50px' : '10px')};
   background-color: ${(props) =>
     props.isDraggingOver ? 'rgba(247, 247, 116, 0.25)' : 'white'};
 `;
 
+const NewTaskButton = styled.button`
+  transition: all 200ms ease-in-out;
+  background: none;
+  margin: 0 0 5px 10px;
+  color: #dddddd;
+  font-family: 'Montserrat', sans-serif;
+
+  &:hover {
+    color: gray;
+    transform: scale(1.1);
+  }
+`;
+
 class TaskList extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      taskFormStatus: false,
+    };
+  }
+
   showNewTaskData = ({ taskName }) => {
     const {
       activeTasksList: { listId },
@@ -87,26 +108,30 @@ class TaskList extends React.Component {
       activeTaskId: id.substring(7),
     };
 
-    if (activeTaskStatus) {
-      setTaskStatus({
-        ...data,
-        isCompleted: false,
-      });
-    } else {
-      setTaskStatus({
-        ...data,
-        isCompleted: true,
-      });
-    }
+    setTaskStatus({
+      ...data,
+      isCompleted: !activeTaskStatus,
+    });
+  };
+
+  newTaskFormStatus = () => {
+    const { taskFormStatus } = this.state;
+
+    this.setState({
+      taskFormStatus: !taskFormStatus,
+    });
   };
 
   render() {
     const {
-      listName,
-      clearForm,
-      listId,
-      activeBoard: { data },
-    } = this.props;
+      props: {
+        listName,
+        clearForm,
+        listId,
+        activeBoard: { data },
+      },
+      state: { taskFormStatus },
+    } = this;
 
     this.activeTasksList = data.find((list) => list.listId === listId);
 
@@ -114,19 +139,13 @@ class TaskList extends React.Component {
       showNewTaskData,
       newTaskStatus,
       activeTasksList: { tasks },
+      newTaskFormStatus,
     } = this;
 
     return (
       <TasksList>
         <TasksListTitle>{listName}</TasksListTitle>
         <TasksListSeparator />
-        <TaskCreationForm
-          onSubmit={(value) => {
-            showNewTaskData(value);
-            clearForm(`form:${listId}`);
-          }}
-          form={`form:${listId}`}
-        />
         <Droppable droppableId={listId}>
           {(provided, snapshot) => (
             <TasksListInnerContainer
@@ -150,6 +169,24 @@ class TaskList extends React.Component {
             </TasksListInnerContainer>
           )}
         </Droppable>
+        {taskFormStatus ? (
+          <TaskCreationForm
+            onSubmit={(value) => {
+              showNewTaskData(value);
+              clearForm(`form:${listId}`);
+            }}
+            form={`form:${listId}`}
+            newTaskFormStatus={newTaskFormStatus}
+          />
+        ) : (
+          <NewTaskButton
+            type="button"
+            aria-label="cancel"
+            onClick={newTaskFormStatus}
+          >
+            ✚ Add new task
+          </NewTaskButton>
+        )}
       </TasksList>
     );
   }

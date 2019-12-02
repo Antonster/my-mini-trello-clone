@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const Input = styled.input`
   width: 100%;
   padding: 10px;
-  margin: 10px 0;
+  margin-bottom: 10px;
   border-radius: 5px;
   box-shadow: ${(props) =>
     props.activeInput
@@ -18,10 +18,10 @@ const Input = styled.input`
 class TaskCreationInput extends React.Component {
   getErrorStyles = () => {
     const {
-      meta: { touched, active, error },
+      meta: { touched, error },
     } = this.props;
 
-    if (touched && active && error) {
+    if (touched && error) {
       return true;
     }
     return false;

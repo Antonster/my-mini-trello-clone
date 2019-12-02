@@ -31,7 +31,7 @@ const BoardHeader = styled.div`
   justify-content: space-around;
   padding: 20px 0;
   border-bottom: 1px solid white;
-  font-weight: bold;
+  font-weight: 600;
   color: white;
   text-shadow: 0px 0px 3px #000;
 `;
@@ -71,8 +71,9 @@ const BoardCancelButton = styled.button`
   transition: all 200ms ease-in-out;
   background-color: #9fe7a4;
   color: white;
+  font-family: 'Montserrat', sans-serif;
   text-shadow: 0px 0px 3px #000;
-  font-weight: bold;
+  font-weight: 500;
 
   &:hover {
     color: #02e2ea;
@@ -85,6 +86,8 @@ const BoardSubmitButton = styled.button`
   width: 100px;
   height: 40px;
   transition: all 200ms ease-in-out;
+  font-weight: 500;
+  font-family: 'Montserrat', sans-serif;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 
   &:hover {
