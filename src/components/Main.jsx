@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BrowserRouter as Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Header from './Header/Header';
@@ -16,13 +16,15 @@ const MainContainer = styled.div`
 
 const Main = () => {
   return (
-    <MainContainer>
-      <Header />
-      <Switch>
-        <Route exact path="/" component={BoardsContainer} />
-        <Route path="/:boardId" component={ActiveBoard} />
-      </Switch>
-    </MainContainer>
+    <Router>
+      <MainContainer>
+        <Header />
+        <Switch>
+          <Route exact path="/" component={BoardsContainer} />
+          <Route path="/:boardId" component={ActiveBoard} />
+        </Switch>
+      </MainContainer>
+    </Router>
   );
 };
 
