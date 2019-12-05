@@ -24,7 +24,7 @@ const NavItem = styled(Link)`
 
 const Board = ({ boardName, boardId }) => {
   return (
-    <NavItem to={`/${boardId}`} id={boardId}>
+    <NavItem to={`/board/${boardId}`} id={boardId}>
       {boardName}
     </NavItem>
   );

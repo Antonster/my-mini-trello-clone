@@ -174,6 +174,7 @@ class TaskList extends React.Component {
             onSubmit={(value) => {
               showNewTaskData(value);
               clearForm(`form:${listId}`);
+              newTaskFormStatus();
             }}
             form={`form:${listId}`}
             newTaskFormStatus={newTaskFormStatus}

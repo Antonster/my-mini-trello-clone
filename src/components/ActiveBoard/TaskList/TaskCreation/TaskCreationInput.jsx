@@ -16,6 +16,18 @@ const Input = styled.input`
 `;
 
 class TaskCreationInput extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.inputRef = React.createRef();
+  }
+
+  componentDidMount() {
+    const { inputRef } = this;
+
+    inputRef.current.focus();
+  }
+
   getErrorStyles = () => {
     const {
       meta: { touched, error },
@@ -28,13 +40,17 @@ class TaskCreationInput extends React.Component {
   };
 
   render() {
-    const { input, type } = this.props;
+    const {
+      inputRef,
+      props: { input, type },
+    } = this;
 
     return (
       <div>
         <Input
           {...input}
           type={type}
+          ref={inputRef}
           autoComplete="off"
           activeInput={this.getErrorStyles()}
         />
