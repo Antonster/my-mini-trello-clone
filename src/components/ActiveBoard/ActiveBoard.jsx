@@ -28,6 +28,10 @@ const BoardName = styled.div`
   text-shadow: 0px 0px 3px #000;
   background-color: #9fe7a4;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const ListsContainer = styled.div`

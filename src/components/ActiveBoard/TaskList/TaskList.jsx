@@ -19,6 +19,14 @@ const TasksList = styled.div`
   background-color: white;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   transition: all 200ms ease-in-out;
+
+  @media screen and (max-width: 1024px) {
+    width: calc(50% - 20px);
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const TasksListTitle = styled.div`

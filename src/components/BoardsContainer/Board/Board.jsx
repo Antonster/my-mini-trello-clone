@@ -20,6 +20,14 @@ const NavItem = styled(Link)`
   &:hover {
     transform: scale(1.05);
   }
+
+  @media screen and (max-width: 1024px) {
+    width: calc(50% - 20px);
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const Board = ({ boardName, boardId }) => {
