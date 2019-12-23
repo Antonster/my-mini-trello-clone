@@ -1,4 +1,5 @@
 import {
+  ACTIVE_BOARD_NAME,
   NEW_BOARD,
   NEW_LIST,
   CREATE_NEW_BOARD,
@@ -7,6 +8,11 @@ import {
   SET_TASK_STATUS,
   DRAG_HAPPENED,
 } from '../constants';
+
+export const setActiveBoardNameAction = (name) => ({
+  type: ACTIVE_BOARD_NAME,
+  name,
+});
 
 export const setNewBoardAction = (status) => ({
   type: NEW_BOARD,

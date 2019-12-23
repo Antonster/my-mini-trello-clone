@@ -1,3 +1,4 @@
+export const ACTIVE_BOARD_NAME = 'ACTIVE_BOARD_NAME';
 export const NEW_BOARD = 'NEW_BOARD';
 export const NEW_LIST = 'NEW_LIST';
 export const CREATE_NEW_BOARD = 'CREATE_NEW_BOARD';

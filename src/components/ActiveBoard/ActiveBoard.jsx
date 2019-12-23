@@ -11,27 +11,13 @@ import {
   setNewListAction,
   createNewListAction,
   dragHappenedAction,
+  setActiveBoardNameAction,
 } from '../../actions/actionsCreators';
 
 const BoardContainer = styled.div`
+  height: calc(100vh - 65px);
+  overflow: auto;
   padding: 0 10%;
-`;
-
-const BoardName = styled.div`
-  display: inline-block;
-  padding: 20px 60px;
-  margin: 20px 0;
-  text-align: center;
-  color: white;
-  font-weight: bold;
-  font-size: 1.8rem;
-  text-shadow: 0px 0px 3px #000;
-  background-color: #9fe7a4;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-
-  @media screen and (max-width: 768px) {
-    width: 100%;
-  }
 `;
 
 const ListsContainer = styled.div`
@@ -90,6 +76,7 @@ class ActiveBoard extends React.Component {
       match: {
         params: { boardId },
       },
+      setActiveBoardName,
     } = this.props;
 
     this.activeBoard = boardsList.find((board) => board.boardId === boardId);
@@ -101,10 +88,11 @@ class ActiveBoard extends React.Component {
       activeBoard: { boardName, data },
     } = this;
 
+    setActiveBoardName(boardName);
+
     return (
       <DragDropContext onDragEnd={onDragEnd}>
         <BoardContainer>
-          <BoardName>{boardName}</BoardName>
           <ListsContainer>
             {data &&
               data.map(({ listName, listId }) => (
@@ -133,6 +121,7 @@ const mapDispatchToProps = (dispatch) => ({
   setNewList: (status) => dispatch(setNewListAction(status)),
   createNewList: (listData) => dispatch(createNewListAction(listData)),
   dragHappened: (data) => dispatch(dragHappenedAction(data)),
+  setActiveBoardName: (name) => dispatch(setActiveBoardNameAction(name)),
 });
 
 export default connect(
@@ -144,6 +133,7 @@ ActiveBoard.propTypes = {
   setNewList: PropTypes.func.isRequired,
   createNewList: PropTypes.func.isRequired,
   dragHappened: PropTypes.func.isRequired,
+  setActiveBoardName: PropTypes.func.isRequired,
   newList: PropTypes.bool.isRequired,
   boardsList: PropTypes.array.isRequired,
   match: PropTypes.object.isRequired,

@@ -48,7 +48,7 @@ const TasksListInnerContainer = styled.div`
   border-radius: 5px;
   min-height: ${(props) => (props.isDraggingOver ? '50px' : '10px')};
   background-color: ${(props) =>
-    props.isDraggingOver ? 'rgba(247, 247, 116, 0.25)' : 'white'};
+    props.isDraggingOver ? 'rgba(247, 247, 116, 0.10)' : 'white'};
 `;
 
 const NewTaskButton = styled.button`

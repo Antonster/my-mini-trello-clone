@@ -12,6 +12,8 @@ import {
 } from '../../actions/actionsCreators';
 
 const BoardsContainerBlock = styled.div`
+  height: calc(100vh - 65px);
+  overflow: auto;
   padding: 5%;
   display: flex;
   flex-wrap: wrap;

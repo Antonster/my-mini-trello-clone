@@ -8,7 +8,7 @@ const NavItem = styled(Link)`
   word-break: break-word;
   width: calc(33.3% - 20px);
   margin: 10px;
-  padding: 55px 0;
+  padding: 55px 20px;
   border-radius: 5px;
   background-color: white;
   color: #333;

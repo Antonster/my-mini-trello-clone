@@ -10,7 +10,6 @@ import BoardsContainer from './components/BoardsContainer/BoardsContainer';
 import ActiveBoard from './components/ActiveBoard/ActiveBoard';
 
 const MainContainer = styled.div`
-  min-height: 100vh;
   background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
   font-family: 'Montserrat', sans-serif;
   font-size: 1.2rem;
