@@ -17,11 +17,10 @@ import {
 const BoardContainer = styled.div`
   height: calc(100vh - 65px);
   overflow: auto;
-  padding: 0 10%;
+  padding: 5%;
 `;
 
-const ListsContainer = styled.div`
-  padding: 50px 0;
+const InnerContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -93,7 +92,7 @@ class ActiveBoard extends React.Component {
     return (
       <DragDropContext onDragEnd={onDragEnd}>
         <BoardContainer>
-          <ListsContainer>
+          <InnerContainer>
             {data &&
               data.map(({ listName, listId }) => (
                 <TaskList
@@ -108,7 +107,7 @@ class ActiveBoard extends React.Component {
             ) : (
               <ListCreationButton />
             )}
-          </ListsContainer>
+          </InnerContainer>
         </BoardContainer>
       </DragDropContext>
     );

@@ -15,6 +15,9 @@ const BoardsContainerBlock = styled.div`
   height: calc(100vh - 65px);
   overflow: auto;
   padding: 5%;
+`;
+
+const InnerContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -45,15 +48,17 @@ class BoardsContainer extends React.Component {
 
     return (
       <BoardsContainerBlock>
-        {boardsList &&
-          boardsList.map(({ boardName, boardId }) => (
-            <Board boardName={boardName} boardId={boardId} key={boardId} />
-          ))}
-        {newBoard ? (
-          <BoardCreationForm onSubmit={showResults} />
-        ) : (
-          <BoardCreationButton />
-        )}
+        <InnerContainer>
+          {boardsList &&
+            boardsList.map(({ boardName, boardId }) => (
+              <Board boardName={boardName} boardId={boardId} key={boardId} />
+            ))}
+          {newBoard ? (
+            <BoardCreationForm onSubmit={showResults} />
+          ) : (
+            <BoardCreationButton />
+          )}
+        </InnerContainer>
       </BoardsContainerBlock>
     );
   }

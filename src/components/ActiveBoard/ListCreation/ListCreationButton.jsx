@@ -10,7 +10,7 @@ const CreationButton = styled.button`
   margin: 10px;
   padding: 55px 0;
   border-radius: 5px;
-  background-color: #0a2c74;
+  background-color: rgba(10, 44, 116, 0.85);
   color: white;
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
