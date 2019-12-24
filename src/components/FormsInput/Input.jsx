@@ -2,10 +2,14 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+const Container = styled.div`
+  position: relative;
+`;
+
 const Input = styled.input`
   width: 100%;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   border-radius: 5px;
   box-shadow: ${(props) =>
     props.activeInput
@@ -13,6 +17,15 @@ const Input = styled.input`
   0 3px 6px rgba(188, 0, 0, 0.45)`
       : `0 3px 6px rgba(0, 0, 0, 0.16),
   0 3px 6px rgba(0, 0, 0, 0.23)`};
+`;
+
+const Error = styled.p`
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  font-size: 0.7rem;
+  text-shadow: 0px 0px 3px white;
+  text-align: center;
 `;
 
 class TaskCreationInput extends React.Component {
@@ -30,10 +43,10 @@ class TaskCreationInput extends React.Component {
 
   getErrorStyles = () => {
     const {
-      meta: { touched, error },
+      meta: { touched, active, error },
     } = this.props;
 
-    if (touched && error) {
+    if (touched && active && error) {
       return true;
     }
     return false;
@@ -42,19 +55,25 @@ class TaskCreationInput extends React.Component {
   render() {
     const {
       inputRef,
-      props: { input, type },
+      props: {
+        input,
+        type,
+        meta: { touched, active, error },
+      },
+      getErrorStyles,
     } = this;
 
     return (
-      <div>
+      <Container>
         <Input
           {...input}
           type={type}
           ref={inputRef}
           autoComplete="off"
-          activeInput={this.getErrorStyles()}
+          activeInput={getErrorStyles()}
         />
-      </div>
+        {touched && active && error && <Error>{error}</Error>}
+      </Container>
     );
   }
 }

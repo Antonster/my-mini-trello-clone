@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Field, reduxForm } from 'redux-form';
 import styled from 'styled-components';
 
-import ListCreationInput from './ListCreationInput';
+import Input from '../../FormsInput/Input';
 import {
   requiredName,
   emptyName,
@@ -33,10 +33,10 @@ const ListFormTitle = styled.div`
   margin: 10px 10px 20px;
 `;
 
-const FormCancelButtom = styled.button`
+const ListCrossButton = styled.button`
   position: absolute;
-  right: -8px;
-  top: -8px;
+  right: -10px;
+  top: -10px;
   width: 24px;
   height: 24px;
   background: url(${crossImg}) no-repeat 50% 50% / cover;
@@ -44,6 +44,47 @@ const FormCancelButtom = styled.button`
 
   &:hover {
     transform: scale(1.2) rotate(-15deg);
+  }
+`;
+
+const ListButtonContainer = styled.div`
+  margin-top: 10px;
+  text-align: center;
+`;
+
+const ListCancelButton = styled.button`
+  margin: 0 10px;
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  transition: all 200ms ease-in-out;
+  background-color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
+  &:hover {
+    color: #02e2ea;
+    transform: scale(1.1);
+  }
+`;
+
+const ListSubmitButton = styled.button`
+  margin: 0 10px;
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: rgba(159, 231, 164, 0.7);
+  color: white;
+  text-shadow: 0px 0px 3px #000;
+  transition: all 200ms ease-in-out;
+  font-weight: 500;
+  font-family: 'Montserrat', sans-serif;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+
+  &:hover {
+    color: #02e2ea;
+    transform: scale(1.1);
   }
 `;
 
@@ -56,14 +97,20 @@ const ListCreationForm = (props) => {
       <Field
         name="listName"
         type="text"
-        component={ListCreationInput}
+        component={Input}
         validate={[requiredName, emptyName]}
       />
-      <FormCancelButtom
+      <ListCrossButton
         type="button"
         aria-label="cancel"
         onClick={() => setNewList(false)}
       />
+      <ListButtonContainer>
+        <ListCancelButton type="button" onClick={() => setNewList(false)}>
+          CANCEL
+        </ListCancelButton>
+        <ListSubmitButton type="submit">CREATE</ListSubmitButton>
+      </ListButtonContainer>
     </ListForm>
   );
 };

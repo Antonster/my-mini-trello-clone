@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import styled from 'styled-components';
 
-import BoardCreationInput from './BoardCreationInput';
+import Input from '../../FormsInput/Input';
 import { setNewBoardAction } from '../../../actions/actionsCreators';
 import {
   requiredName,
@@ -37,6 +37,7 @@ const BoardForm = styled.form`
 const BoardHeader = styled.div`
   display: flex;
   justify-content: space-around;
+  align-items: center;
   padding: 20px 0;
   border-bottom: 1px solid white;
   font-weight: 600;
@@ -68,7 +69,7 @@ const BoardMainTitle = styled.div`
 `;
 
 const BoardButtonContainer = styled.div`
-  padding-top: 40px;
+  margin-top: 10px;
   text-align: center;
 `;
 
@@ -121,7 +122,7 @@ const BoardCreationForm = (props) => {
         <BoardMainTitle>What shall we call the board?</BoardMainTitle>
         <Field
           name="boardName"
-          component={BoardCreationInput}
+          component={Input}
           type="text"
           validate={[requiredName, emptyName]}
         />

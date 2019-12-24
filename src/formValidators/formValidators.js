@@ -1,4 +1,3 @@
-export const requiredName = (value) =>
-  value ? undefined : 'Oops! Looks like you forgot the name!';
+export const requiredName = (value) => (value ? undefined : 'Empty name!');
 export const emptyName = (value) =>
-  !/^\s*$/.test(value) ? undefined : "Name can't be empty!";
+  !/^\s*$/.test(value) ? undefined : 'Empty name!';
