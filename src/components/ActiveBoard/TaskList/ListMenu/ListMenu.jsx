@@ -43,12 +43,12 @@ class ListMenu extends React.Component {
         id: 'all_in_work',
       },
       {
-        name: 'delete all',
-        id: 'delete_all',
+        name: 'remove ready',
+        id: 'remove_ready',
       },
       {
-        name: 'delete list',
-        id: 'delete_list',
+        name: 'remove list',
+        id: 'remove_list',
       },
     ];
   }

@@ -13,6 +13,8 @@ import {
   setTaskStatusAction,
   allReadyAction,
   allInWorkAction,
+  removeReadyAction,
+  removeListAction,
 } from '../../../actions/actionsCreators';
 import menuImg from '../../../assets/menu.png';
 
@@ -151,6 +153,8 @@ class TaskList extends React.Component {
       props: {
         allReady,
         allInWork,
+        removeReady,
+        removeList,
         activeBoard: { boardId },
       },
     } = this;
@@ -168,6 +172,20 @@ class TaskList extends React.Component {
       }
       case 'all_in_work': {
         allInWork({
+          activeBoardId: boardId,
+          activeTasksListId: listId,
+        });
+        break;
+      }
+      case 'remove_ready': {
+        removeReady({
+          activeBoardId: boardId,
+          activeTasksListId: listId,
+        });
+        break;
+      }
+      case 'remove_list': {
+        removeList({
           activeBoardId: boardId,
           activeTasksListId: listId,
         });
@@ -274,6 +292,8 @@ const mapDispatchToProps = (dispatch) => ({
   setTaskStatus: (status) => dispatch(setTaskStatusAction(status)),
   allReady: (data) => dispatch(allReadyAction(data)),
   allInWork: (data) => dispatch(allInWorkAction(data)),
+  removeReady: (data) => dispatch(removeReadyAction(data)),
+  removeList: (data) => dispatch(removeListAction(data)),
 });
 
 export default connect(
@@ -290,4 +310,6 @@ TaskList.propTypes = {
   clearForm: PropTypes.func.isRequired,
   allReady: PropTypes.func.isRequired,
   allInWork: PropTypes.func.isRequired,
+  removeReady: PropTypes.func.isRequired,
+  removeList: PropTypes.func.isRequired,
 };

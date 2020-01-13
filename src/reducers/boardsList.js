@@ -5,6 +5,8 @@ import {
   SET_TASK_STATUS,
   ALL_READY,
   ALL_IN_WORK,
+  REMOVE_READY,
+  REMOVE_LIST,
   DRAG_HAPPENED,
 } from '../constants';
 
@@ -131,6 +133,44 @@ export default (state = initialState, action) => {
                 };
               }
               return list;
+            }),
+          };
+        }
+        return board;
+      });
+    }
+    case REMOVE_READY: {
+      const { activeBoardId, activeTasksListId } = action;
+
+      return state.map((board) => {
+        if (board.boardId === activeBoardId) {
+          return {
+            ...board,
+            data: board.data.map((list) => {
+              if (list.listId === activeTasksListId) {
+                return {
+                  ...list,
+                  tasks: list.tasks.filter((task) => {
+                    return task.isCompleted === false;
+                  }),
+                };
+              }
+              return list;
+            }),
+          };
+        }
+        return board;
+      });
+    }
+    case REMOVE_LIST: {
+      const { activeBoardId, activeTasksListId } = action;
+
+      return state.map((board) => {
+        if (board.boardId === activeBoardId) {
+          return {
+            ...board,
+            data: board.data.filter((list) => {
+              return list.listId !== activeTasksListId;
             }),
           };
         }

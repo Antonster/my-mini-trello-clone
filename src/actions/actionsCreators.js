@@ -8,6 +8,8 @@ import {
   SET_TASK_STATUS,
   ALL_READY,
   ALL_IN_WORK,
+  REMOVE_READY,
+  REMOVE_LIST,
   DRAG_HAPPENED,
 } from '../constants';
 
@@ -69,6 +71,18 @@ export const allReadyAction = ({ activeBoardId, activeTasksListId }) => ({
 
 export const allInWorkAction = ({ activeBoardId, activeTasksListId }) => ({
   type: ALL_IN_WORK,
+  activeBoardId,
+  activeTasksListId,
+});
+
+export const removeReadyAction = ({ activeBoardId, activeTasksListId }) => ({
+  type: REMOVE_READY,
+  activeBoardId,
+  activeTasksListId,
+});
+
+export const removeListAction = ({ activeBoardId, activeTasksListId }) => ({
+  type: REMOVE_LIST,
   activeBoardId,
   activeTasksListId,
 });
