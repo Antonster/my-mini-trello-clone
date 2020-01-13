@@ -59,7 +59,7 @@ const BoardCross = styled.button`
 
 const BoardMain = styled.div`
   font-size: 0.9rem;
-  padding: 0 15%;
+  padding: 0 10%;
 `;
 
 const BoardMainTitle = styled.div`

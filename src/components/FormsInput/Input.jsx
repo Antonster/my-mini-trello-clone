@@ -43,10 +43,10 @@ class TaskCreationInput extends React.Component {
 
   getErrorStyles = () => {
     const {
-      meta: { touched, active, error },
+      meta: { touched, error },
     } = this.props;
 
-    if (touched && active && error) {
+    if (touched && error) {
       return true;
     }
     return false;
@@ -58,7 +58,7 @@ class TaskCreationInput extends React.Component {
       props: {
         input,
         type,
-        meta: { touched, active, error },
+        meta: { touched, error },
       },
       getErrorStyles,
     } = this;
@@ -72,7 +72,7 @@ class TaskCreationInput extends React.Component {
           autoComplete="off"
           activeInput={getErrorStyles()}
         />
-        {touched && active && error && <Error>{error}</Error>}
+        {touched && error && <Error>{error}</Error>}
       </Container>
     );
   }

@@ -7,12 +7,17 @@ import styled from 'styled-components';
 
 import Task from './TaskCreation/Task';
 import TaskCreationForm from './TaskCreation/TaskCreationForm';
+import ListMenu from './ListMenu/ListMenu';
 import {
   createNewTaskAction,
   setTaskStatusAction,
+  allReadyAction,
+  allInWorkAction,
 } from '../../../actions/actionsCreators';
+import menuImg from '../../../assets/menu.png';
 
 const TasksList = styled.div`
+  position: relative;
   width: calc(33.3% - 20px);
   margin: 10px;
   padding: 5px;
@@ -33,6 +38,15 @@ const TasksListTitle = styled.div`
   margin: 20px 0;
   text-align: center;
   word-break: break-word;
+`;
+
+const TaskListMenu = styled.button`
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 25px;
+  height: 25px;
+  background: white url(${menuImg}) no-repeat 50% 50% / contain;
 `;
 
 const TasksListSeparator = styled.hr`
@@ -70,6 +84,7 @@ class TaskList extends React.Component {
 
     this.state = {
       taskFormStatus: false,
+      innerMenuStatus: false,
     };
   }
 
@@ -130,6 +145,50 @@ class TaskList extends React.Component {
     });
   };
 
+  onListMenuClick = (event) => {
+    const {
+      activeTasksList: { listId },
+      props: {
+        allReady,
+        allInWork,
+        activeBoard: { boardId },
+      },
+    } = this;
+    const {
+      target: { id },
+    } = event;
+
+    switch (id) {
+      case 'all_ready': {
+        allReady({
+          activeBoardId: boardId,
+          activeTasksListId: listId,
+        });
+        break;
+      }
+      case 'all_in_work': {
+        allInWork({
+          activeBoardId: boardId,
+          activeTasksListId: listId,
+        });
+        break;
+      }
+      default:
+    }
+  };
+
+  mouseEnter = () => {
+    this.setState({
+      innerMenuStatus: true,
+    });
+  };
+
+  mouseLeave = () => {
+    this.setState({
+      innerMenuStatus: false,
+    });
+  };
+
   render() {
     const {
       props: {
@@ -138,7 +197,7 @@ class TaskList extends React.Component {
         listId,
         activeBoard: { data },
       },
-      state: { taskFormStatus },
+      state: { taskFormStatus, innerMenuStatus },
     } = this;
 
     this.activeTasksList = data.find((list) => list.listId === listId);
@@ -148,11 +207,17 @@ class TaskList extends React.Component {
       newTaskStatus,
       activeTasksList: { tasks },
       newTaskFormStatus,
+      onListMenuClick,
+      mouseEnter,
+      mouseLeave,
     } = this;
 
     return (
       <TasksList>
         <TasksListTitle>{listName}</TasksListTitle>
+        <TaskListMenu onFocus={mouseEnter} onBlur={mouseLeave}>
+          {innerMenuStatus && <ListMenu onListMenuClick={onListMenuClick} />}
+        </TaskListMenu>
         <TasksListSeparator />
         <Droppable droppableId={listId}>
           {(provided, snapshot) => (
@@ -207,6 +272,8 @@ const mapDispatchToProps = (dispatch) => ({
   clearForm: (formName) => dispatch(reset(formName)),
   createNewTask: (newTaskData) => dispatch(createNewTaskAction(newTaskData)),
   setTaskStatus: (status) => dispatch(setTaskStatusAction(status)),
+  allReady: (data) => dispatch(allReadyAction(data)),
+  allInWork: (data) => dispatch(allInWorkAction(data)),
 });
 
 export default connect(
@@ -221,4 +288,6 @@ TaskList.propTypes = {
   createNewTask: PropTypes.func.isRequired,
   setTaskStatus: PropTypes.func.isRequired,
   clearForm: PropTypes.func.isRequired,
+  allReady: PropTypes.func.isRequired,
+  allInWork: PropTypes.func.isRequired,
 };

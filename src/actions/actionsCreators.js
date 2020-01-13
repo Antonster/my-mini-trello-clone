@@ -6,6 +6,8 @@ import {
   CREATE_NEW_LIST,
   CREATE_NEW_TASK,
   SET_TASK_STATUS,
+  ALL_READY,
+  ALL_IN_WORK,
   DRAG_HAPPENED,
 } from '../constants';
 
@@ -57,6 +59,18 @@ export const setTaskStatusAction = ({
   activeTasksListId,
   activeTaskId,
   isCompleted,
+});
+
+export const allReadyAction = ({ activeBoardId, activeTasksListId }) => ({
+  type: ALL_READY,
+  activeBoardId,
+  activeTasksListId,
+});
+
+export const allInWorkAction = ({ activeBoardId, activeTasksListId }) => ({
+  type: ALL_IN_WORK,
+  activeBoardId,
+  activeTasksListId,
 });
 
 export const dragHappenedAction = ({

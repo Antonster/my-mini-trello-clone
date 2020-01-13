@@ -3,6 +3,8 @@ import {
   CREATE_NEW_LIST,
   CREATE_NEW_TASK,
   SET_TASK_STATUS,
+  ALL_READY,
+  ALL_IN_WORK,
   DRAG_HAPPENED,
 } from '../constants';
 
@@ -73,6 +75,58 @@ export default (state = initialState, action) => {
                       };
                     }
                     return task;
+                  }),
+                };
+              }
+              return list;
+            }),
+          };
+        }
+        return board;
+      });
+    }
+    case ALL_READY: {
+      const { activeBoardId, activeTasksListId } = action;
+
+      return state.map((board) => {
+        if (board.boardId === activeBoardId) {
+          return {
+            ...board,
+            data: board.data.map((list) => {
+              if (list.listId === activeTasksListId) {
+                return {
+                  ...list,
+                  tasks: list.tasks.map((task) => {
+                    return {
+                      ...task,
+                      isCompleted: true,
+                    };
+                  }),
+                };
+              }
+              return list;
+            }),
+          };
+        }
+        return board;
+      });
+    }
+    case ALL_IN_WORK: {
+      const { activeBoardId, activeTasksListId } = action;
+
+      return state.map((board) => {
+        if (board.boardId === activeBoardId) {
+          return {
+            ...board,
+            data: board.data.map((list) => {
+              if (list.listId === activeTasksListId) {
+                return {
+                  ...list,
+                  tasks: list.tasks.map((task) => {
+                    return {
+                      ...task,
+                      isCompleted: false,
+                    };
                   }),
                 };
               }
