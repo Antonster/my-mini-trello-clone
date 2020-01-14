@@ -46,10 +46,7 @@ const mapDispatchToProps = (dispatch) => ({
   setNewList: (status) => dispatch(setNewListAction(status)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ListCreationButton);
+export default connect(mapStateToProps, mapDispatchToProps)(ListCreationButton);
 
 ListCreationButton.propTypes = {
   setNewList: PropTypes.func.isRequired,

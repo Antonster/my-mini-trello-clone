@@ -123,10 +123,7 @@ const mapDispatchToProps = (dispatch) => ({
   setActiveBoardName: (name) => dispatch(setActiveBoardNameAction(name)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ActiveBoard);
+export default connect(mapStateToProps, mapDispatchToProps)(ActiveBoard);
 
 ActiveBoard.propTypes = {
   setNewList: PropTypes.func.isRequired,

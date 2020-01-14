@@ -49,6 +49,8 @@ const TaskListMenu = styled.button`
   width: 25px;
   height: 25px;
   background: white url(${menuImg}) no-repeat 50% 50% / contain;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
 `;
 
 const TasksListSeparator = styled.hr`
@@ -296,10 +298,7 @@ const mapDispatchToProps = (dispatch) => ({
   removeList: (data) => dispatch(removeListAction(data)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TaskList);
+export default connect(mapStateToProps, mapDispatchToProps)(TaskList);
 
 TaskList.propTypes = {
   listName: PropTypes.string.isRequired,
