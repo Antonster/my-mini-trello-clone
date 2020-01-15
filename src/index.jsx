@@ -8,6 +8,7 @@ import store from './store';
 import Header from './components/Header/Header';
 import BoardsContainer from './components/BoardsContainer/BoardsContainer';
 import ActiveBoard from './components/ActiveBoard/ActiveBoard';
+import PageNotFound from './PageNotFound';
 
 const MainContainer = styled.div`
   background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
@@ -24,7 +25,7 @@ const Main = () => {
         <Switch>
           <Route exact path="/" component={BoardsContainer} />
           <Route path="/board/:boardId" component={ActiveBoard} />
-          <Route path="/" render={() => <div>404</div>} />
+          <Route component={PageNotFound} />
         </Switch>
       </MainContainer>
     </Router>

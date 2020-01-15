@@ -10,7 +10,7 @@ import {
   ALL_IN_WORK,
   REMOVE_READY,
   REMOVE_LIST,
-  DRAG_HAPPENED,
+  TASK_DRAG_HAPPENED,
 } from '../constants';
 
 export const setActiveBoardNameAction = (name) => ({
@@ -87,7 +87,7 @@ export const removeListAction = ({ activeBoardId, activeTasksListId }) => ({
   activeTasksListId,
 });
 
-export const dragHappenedAction = ({
+export const taskDragHappenedAction = ({
   activeBoardId,
   droppableIdStart,
   droppableIdEnd,
@@ -95,7 +95,7 @@ export const dragHappenedAction = ({
   droppableIndexEnd,
   droppableId,
 }) => ({
-  type: DRAG_HAPPENED,
+  type: TASK_DRAG_HAPPENED,
   activeBoardId,
   droppableIdStart,
   droppableIdEnd,

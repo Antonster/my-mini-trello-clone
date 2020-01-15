@@ -77,10 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
   setActiveBoardName: (name) => dispatch(setActiveBoardNameAction(name)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
 
 Header.propTypes = {
   activeBoardName: PropTypes.string.isRequired,

@@ -7,7 +7,7 @@ import {
   ALL_IN_WORK,
   REMOVE_READY,
   REMOVE_LIST,
-  DRAG_HAPPENED,
+  TASK_DRAG_HAPPENED,
 } from '../constants';
 
 const initialState = JSON.parse(localStorage.getItem('boardsList')) || [];
@@ -177,7 +177,7 @@ export default (state = initialState, action) => {
         return board;
       });
     }
-    case DRAG_HAPPENED: {
+    case TASK_DRAG_HAPPENED: {
       const {
         activeBoardId,
         droppableIdStart,

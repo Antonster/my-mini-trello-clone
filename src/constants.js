@@ -9,4 +9,4 @@ export const ALL_READY = 'ALL_READY';
 export const ALL_IN_WORK = 'ALL_IN_WORK';
 export const REMOVE_READY = 'REMOVE_READY';
 export const REMOVE_LIST = 'REMOVE_LIST';
-export const DRAG_HAPPENED = 'DRAG_HAPPENED';
+export const TASK_DRAG_HAPPENED = 'TASK_DRAG_HAPPENED';

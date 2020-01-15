@@ -71,10 +71,7 @@ const mapDispatchToProps = (dispatch) => ({
   getBoardsList: (boardData) => dispatch(getBoardsListAction(boardData)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(BoardsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(BoardsContainer);
 
 BoardsContainer.propTypes = {
   boardsList: PropTypes.array.isRequired,
