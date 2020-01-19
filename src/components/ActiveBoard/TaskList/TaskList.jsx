@@ -25,7 +25,8 @@ const TasksList = styled.div`
   padding: 5px;
   background-color: white;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  transition: all 200ms ease-in-out;
+  transition: transform 200ms ease-in-out, opacity 1s ease;
+  opacity: ${(props) => (props.animation === 'animated' ? '1' : '0')};
 
   @media screen and (max-width: 1024px) {
     width: calc(50% - 20px);
@@ -89,7 +90,18 @@ class TaskList extends React.Component {
     this.state = {
       taskFormStatus: false,
       innerMenuStatus: false,
+      animation: '',
     };
+  }
+
+  componentDidMount() {
+    setTimeout(
+      () =>
+        this.setState({
+          animation: 'animated',
+        }),
+      0
+    );
   }
 
   showNewTaskData = ({ taskName }) => {
@@ -209,31 +221,32 @@ class TaskList extends React.Component {
     });
   };
 
-  render() {
+  updateActiveTasksList = () => {
     const {
-      props: {
-        listName,
-        clearForm,
-        listId,
-        activeBoard: { data },
-      },
-      state: { taskFormStatus, innerMenuStatus },
-    } = this;
+      listId,
+      activeBoard: { data },
+    } = this.props;
 
     this.activeTasksList = data.find((list) => list.listId === listId);
+  };
+
+  render() {
+    this.updateActiveTasksList();
 
     const {
       showNewTaskData,
       newTaskStatus,
-      activeTasksList: { tasks },
       newTaskFormStatus,
       onListMenuClick,
       mouseEnter,
       mouseLeave,
+      state: { taskFormStatus, innerMenuStatus, animation },
+      props: { listName, clearForm, listId },
+      activeTasksList: { tasks },
     } = this;
 
     return (
-      <TasksList>
+      <TasksList animation={animation}>
         <TasksListTitle>{listName}</TasksListTitle>
         <TaskListMenu onFocus={mouseEnter} onBlur={mouseLeave}>
           {innerMenuStatus && <ListMenu onListMenuClick={onListMenuClick} />}

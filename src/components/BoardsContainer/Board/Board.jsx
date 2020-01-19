@@ -15,7 +15,8 @@ const NavItem = styled(Link)`
   font-size: 1.5rem;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
   text-decoration: none;
-  transition: all 200ms ease-in-out;
+  transition: transform 200ms ease-in-out, opacity 1s ease;
+  opacity: ${(props) => (props.animation === 'animated' ? '1' : '0')};
 
   &:hover {
     transform: scale(1.05);
@@ -30,13 +31,38 @@ const NavItem = styled(Link)`
   }
 `;
 
-const Board = ({ boardName, boardId }) => {
-  return (
-    <NavItem to={`/board/${boardId}`} id={boardId}>
-      {boardName}
-    </NavItem>
-  );
-};
+class Board extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      animation: '',
+    };
+  }
+
+  componentDidMount() {
+    setTimeout(
+      () =>
+        this.setState({
+          animation: 'animated',
+        }),
+      0
+    );
+  }
+
+  render() {
+    const {
+      props: { boardId, boardName },
+      state: { animation },
+    } = this;
+
+    return (
+      <NavItem to={`/board/${boardId}`} id={boardId} animation={animation}>
+        {boardName}
+      </NavItem>
+    );
+  }
+}
 
 export default Board;
 

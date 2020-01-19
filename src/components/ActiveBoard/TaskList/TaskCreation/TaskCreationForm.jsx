@@ -13,6 +13,8 @@ import crossImg from '../../../../assets/cross.svg';
 const CreationForm = styled.form`
   position: relative;
   padding: 0 5px;
+  transition: transform 200ms ease-in-out, opacity 1s ease;
+  opacity: ${(props) => (props.animation === 'animated' ? '1' : '0')};
 `;
 
 const TaskCrossButton = styled.button`
@@ -70,31 +72,54 @@ const TaskSubmitButton = styled.button`
   }
 `;
 
-const TaskCreationForm = (props) => {
-  const { handleSubmit, newTaskFormStatus } = props;
+class TaskCreationForm extends React.Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <CreationForm onSubmit={handleSubmit}>
-      <Field
-        name="taskName"
-        type="text"
-        component={Input}
-        validate={[requiredName, emptyName]}
-      />
-      <TaskCrossButton
-        type="button"
-        aria-label="cancel"
-        onClick={newTaskFormStatus}
-      />
-      <TaskButtonContainer>
-        <TaskCancelButton type="button" onClick={newTaskFormStatus}>
-          CANCEL
-        </TaskCancelButton>
-        <TaskSubmitButton type="submit">CREATE</TaskSubmitButton>
-      </TaskButtonContainer>
-    </CreationForm>
-  );
-};
+    this.state = {
+      animation: '',
+    };
+  }
+
+  componentDidMount() {
+    setTimeout(
+      () =>
+        this.setState({
+          animation: 'animated',
+        }),
+      0
+    );
+  }
+
+  render() {
+    const {
+      props: { handleSubmit, newTaskFormStatus },
+      state: { animation },
+    } = this;
+
+    return (
+      <CreationForm onSubmit={handleSubmit} animation={animation}>
+        <Field
+          name="taskName"
+          type="text"
+          component={Input}
+          validate={[requiredName, emptyName]}
+        />
+        <TaskCrossButton
+          type="button"
+          aria-label="cancel"
+          onClick={newTaskFormStatus}
+        />
+        <TaskButtonContainer>
+          <TaskCancelButton type="button" onClick={newTaskFormStatus}>
+            CANCEL
+          </TaskCancelButton>
+          <TaskSubmitButton type="submit">CREATE</TaskSubmitButton>
+        </TaskButtonContainer>
+      </CreationForm>
+    );
+  }
+}
 
 export default reduxForm()(TaskCreationForm);
 

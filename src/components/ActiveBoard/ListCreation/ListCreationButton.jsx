@@ -15,7 +15,8 @@ const CreationButton = styled.button`
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  transition: all 200ms ease-in-out;
+  transition: transform 200ms ease-in-out, opacity 1s ease;
+  opacity: ${(props) => (props.animation === 'animated' ? '1' : '0')};
 
   &:hover {
     transform: scale(1.05);
@@ -30,15 +31,42 @@ const CreationButton = styled.button`
   }
 `;
 
-const ListCreationButton = (props) => {
-  const { setNewList } = props;
+class ListCreationButton extends React.Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <CreationButton type="button" onClick={() => setNewList(true)}>
-      Create a new list...
-    </CreationButton>
-  );
-};
+    this.state = {
+      animation: '',
+    };
+  }
+
+  componentDidMount() {
+    setTimeout(
+      () =>
+        this.setState({
+          animation: 'animated',
+        }),
+      0
+    );
+  }
+
+  render() {
+    const {
+      props: { setNewList },
+      state: { animation },
+    } = this;
+
+    return (
+      <CreationButton
+        type="button"
+        animation={animation}
+        onClick={() => setNewList(true)}
+      >
+        Create a new list...
+      </CreationButton>
+    );
+  }
+}
 
 const mapStateToProps = (state) => state;
 

@@ -8,7 +8,7 @@ import store from './store';
 import Header from './components/Header/Header';
 import BoardsContainer from './components/BoardsContainer/BoardsContainer';
 import ActiveBoard from './components/ActiveBoard/ActiveBoard';
-import PageNotFound from './PageNotFound';
+import PageNotFound from './components/PageNotFound';
 
 const MainContainer = styled.div`
   background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);

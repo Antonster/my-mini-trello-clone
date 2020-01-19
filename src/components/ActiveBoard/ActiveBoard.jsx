@@ -27,6 +27,15 @@ const InnerContainer = styled.div`
 `;
 
 class ActiveBoard extends React.Component {
+  componentDidMount() {
+    const {
+      props: { setActiveBoardName },
+      activeBoard: { boardName },
+    } = this;
+
+    setActiveBoardName(boardName);
+  }
+
   showNewListData = ({ listName }) => {
     const {
       activeBoard: { boardId },
@@ -68,26 +77,27 @@ class ActiveBoard extends React.Component {
     }
   };
 
-  render() {
+  updateActiveBoard = () => {
     const {
       boardsList,
-      newList,
       match: {
         params: { boardId },
       },
-      setActiveBoardName,
     } = this.props;
 
     this.activeBoard = boardsList.find((board) => board.boardId === boardId);
+  };
+
+  render() {
+    this.updateActiveBoard();
 
     const {
       showNewListData,
       activeBoard,
       onDragEnd,
-      activeBoard: { boardName, data },
+      activeBoard: { data },
+      props: { newList },
     } = this;
-
-    setActiveBoardName(boardName);
 
     return (
       <DragDropContext onDragEnd={onDragEnd}>

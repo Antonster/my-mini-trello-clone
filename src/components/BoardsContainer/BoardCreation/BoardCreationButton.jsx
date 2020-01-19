@@ -16,7 +16,8 @@ const CreateNewBoard = styled.button`
   font-weight: 600;
   text-shadow: 0px 0px 3px #000;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  transition: all 200ms ease-in-out;
+  transition: transform 200ms ease-in-out, opacity 1s ease;
+  opacity: ${(props) => (props.animation === 'animated' ? '1' : '0')};
 
   &:hover {
     transform: scale(1.05);
@@ -31,19 +32,43 @@ const CreateNewBoard = styled.button`
   }
 `;
 
-const BoardCreationButton = (props) => {
-  const { setNewBoard } = props;
+class BoardCreationButton extends React.Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <CreateNewBoard
-      className="boards_container_new_board_button"
-      type="button"
-      onClick={() => setNewBoard(true)}
-    >
-      Create a new board...
-    </CreateNewBoard>
-  );
-};
+    this.state = {
+      animation: '',
+    };
+  }
+
+  componentDidMount() {
+    setTimeout(
+      () =>
+        this.setState({
+          animation: 'animated',
+        }),
+      0
+    );
+  }
+
+  render() {
+    const {
+      props: { setNewBoard },
+      state: { animation },
+    } = this;
+
+    return (
+      <CreateNewBoard
+        className="boards_container_new_board_button"
+        type="button"
+        onClick={() => setNewBoard(true)}
+        animation={animation}
+      >
+        Create a new board...
+      </CreateNewBoard>
+    );
+  }
+}
 
 const mapStateToProps = (state) => state;
 

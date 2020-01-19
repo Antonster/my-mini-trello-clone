@@ -19,7 +19,8 @@ const BoardForm = styled.form`
   border-radius: 5px;
   background-color: #9fe7a4;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  transition: all 200ms ease-in-out;
+  transition: transform 200ms ease-in-out, opacity 1s ease;
+  opacity: ${(props) => (props.animation === 'animated' ? '1' : '0')};
 
   &:hover {
     transform: scale(1.05);
@@ -105,37 +106,60 @@ const BoardSubmitButton = styled.button`
   }
 `;
 
-const BoardCreationForm = (props) => {
-  const { setNewBoard, handleSubmit } = props;
+class BoardCreationForm extends React.Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <BoardForm onSubmit={handleSubmit}>
-      <BoardHeader>
-        <div>Creating a board</div>
-        <BoardCross
-          type="button"
-          aria-label="new-board-cross"
-          onClick={() => setNewBoard(false)}
-        />
-      </BoardHeader>
-      <BoardMain>
-        <BoardMainTitle>What shall we call the board?</BoardMainTitle>
-        <Field
-          name="boardName"
-          component={Input}
-          type="text"
-          validate={[requiredName, emptyName]}
-        />
-        <BoardButtonContainer>
-          <BoardCancelButton type="button" onClick={() => setNewBoard(false)}>
-            CANCEL
-          </BoardCancelButton>
-          <BoardSubmitButton type="submit">CREATE</BoardSubmitButton>
-        </BoardButtonContainer>
-      </BoardMain>
-    </BoardForm>
-  );
-};
+    this.state = {
+      animation: '',
+    };
+  }
+
+  componentDidMount() {
+    setTimeout(
+      () =>
+        this.setState({
+          animation: 'animated',
+        }),
+      0
+    );
+  }
+
+  render() {
+    const {
+      props: { setNewBoard, handleSubmit },
+      state: { animation },
+    } = this;
+
+    return (
+      <BoardForm onSubmit={handleSubmit} animation={animation}>
+        <BoardHeader>
+          <div>Creating a board</div>
+          <BoardCross
+            type="button"
+            aria-label="new-board-cross"
+            onClick={() => setNewBoard(false)}
+          />
+        </BoardHeader>
+        <BoardMain>
+          <BoardMainTitle>What shall we call the board?</BoardMainTitle>
+          <Field
+            name="boardName"
+            component={Input}
+            type="text"
+            validate={[requiredName, emptyName]}
+          />
+          <BoardButtonContainer>
+            <BoardCancelButton type="button" onClick={() => setNewBoard(false)}>
+              CANCEL
+            </BoardCancelButton>
+            <BoardSubmitButton type="submit">CREATE</BoardSubmitButton>
+          </BoardButtonContainer>
+        </BoardMain>
+      </BoardForm>
+    );
+  }
+}
 
 const mapStateToProps = (state) => state;
 

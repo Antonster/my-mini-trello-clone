@@ -19,6 +19,8 @@ const ListForm = styled.form`
   padding: 10px;
   background-color: white;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  transition: transform 200ms ease-in-out, opacity 1s ease;
+  opacity: ${(props) => (props.animation === 'animated' ? '1' : '0')};
 
   @media screen and (max-width: 1024px) {
     width: calc(50% - 20px);
@@ -88,32 +90,55 @@ const ListSubmitButton = styled.button`
   }
 `;
 
-const ListCreationForm = (props) => {
-  const { handleSubmit, setNewList } = props;
+class ListCreationForm extends React.Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <ListForm onSubmit={handleSubmit}>
-      <ListFormTitle>Enter list name</ListFormTitle>
-      <Field
-        name="listName"
-        type="text"
-        component={Input}
-        validate={[requiredName, emptyName]}
-      />
-      <ListCrossButton
-        type="button"
-        aria-label="cancel"
-        onClick={() => setNewList(false)}
-      />
-      <ListButtonContainer>
-        <ListCancelButton type="button" onClick={() => setNewList(false)}>
-          CANCEL
-        </ListCancelButton>
-        <ListSubmitButton type="submit">CREATE</ListSubmitButton>
-      </ListButtonContainer>
-    </ListForm>
-  );
-};
+    this.state = {
+      animation: '',
+    };
+  }
+
+  componentDidMount() {
+    setTimeout(
+      () =>
+        this.setState({
+          animation: 'animated',
+        }),
+      0
+    );
+  }
+
+  render() {
+    const {
+      props: { handleSubmit, setNewList },
+      state: { animation },
+    } = this;
+
+    return (
+      <ListForm onSubmit={handleSubmit} animation={animation}>
+        <ListFormTitle>Enter list name</ListFormTitle>
+        <Field
+          name="listName"
+          type="text"
+          component={Input}
+          validate={[requiredName, emptyName]}
+        />
+        <ListCrossButton
+          type="button"
+          aria-label="cancel"
+          onClick={() => setNewList(false)}
+        />
+        <ListButtonContainer>
+          <ListCancelButton type="button" onClick={() => setNewList(false)}>
+            CANCEL
+          </ListCancelButton>
+          <ListSubmitButton type="submit">CREATE</ListSubmitButton>
+        </ListButtonContainer>
+      </ListForm>
+    );
+  }
+}
 
 const mapStateToProps = (state) => state;
 

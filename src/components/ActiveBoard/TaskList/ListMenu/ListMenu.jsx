@@ -11,6 +11,8 @@ const MainBlock = styled.ul`
   width: 150px;
   background-color: white;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  transition: opacity 1s ease;
+  opacity: ${(props) => (props.animation === 'animated' ? '1' : '0')};
 `;
 
 const NavButton = styled.li`
@@ -33,6 +35,10 @@ class ListMenu extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      animation: '',
+    };
+
     this.buttonsData = [
       {
         name: 'all ready',
@@ -53,14 +59,25 @@ class ListMenu extends React.Component {
     ];
   }
 
+  componentDidMount() {
+    setTimeout(
+      () =>
+        this.setState({
+          animation: 'animated',
+        }),
+      0
+    );
+  }
+
   render() {
     const {
       props: { onListMenuClick },
+      state: { animation },
       buttonsData,
     } = this;
 
     return (
-      <MainBlock>
+      <MainBlock animation={animation}>
         {buttonsData.map((item) => (
           <NavButton
             key={`${item.name}`}
