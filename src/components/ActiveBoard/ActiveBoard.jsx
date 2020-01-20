@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import TaskList from './TaskList/TaskList';
 import ListCreationButton from './ListCreation/ListCreationButton';
 import ListCreationForm from './ListCreation/ListCreationForm';
+import PageNotFound from '../PageNotFound';
 import {
   setNewListAction,
   createNewListAction,
@@ -28,12 +29,15 @@ const InnerContainer = styled.div`
 
 class ActiveBoard extends React.Component {
   componentDidMount() {
-    const {
-      props: { setActiveBoardName },
-      activeBoard: { boardName },
-    } = this;
+    const { setActiveBoardName } = this.props;
 
-    setActiveBoardName(boardName);
+    if (this.activeBoard) {
+      const { boardName } = this.activeBoard;
+
+      setActiveBoardName(boardName);
+    } else {
+      setActiveBoardName('Board Not Found');
+    }
   }
 
   showNewListData = ({ listName }) => {
@@ -95,16 +99,15 @@ class ActiveBoard extends React.Component {
       showNewListData,
       activeBoard,
       onDragEnd,
-      activeBoard: { data },
       props: { newList },
     } = this;
 
     return (
       <DragDropContext onDragEnd={onDragEnd}>
         <BoardContainer>
-          <InnerContainer>
-            {data &&
-              data.map(({ listName, listId }) => (
+          {activeBoard ? (
+            <InnerContainer>
+              {activeBoard.data.map(({ listName, listId }) => (
                 <TaskList
                   listId={listId}
                   key={listId}
@@ -112,12 +115,15 @@ class ActiveBoard extends React.Component {
                   activeBoard={activeBoard}
                 />
               ))}
-            {newList ? (
-              <ListCreationForm onSubmit={showNewListData} />
-            ) : (
-              <ListCreationButton />
-            )}
-          </InnerContainer>
+              {newList ? (
+                <ListCreationForm onSubmit={showNewListData} />
+              ) : (
+                <ListCreationButton />
+              )}
+            </InnerContainer>
+          ) : (
+            <PageNotFound />
+          )}
         </BoardContainer>
       </DragDropContext>
     );
