@@ -11,7 +11,7 @@ const MainBlock = styled.ul`
   width: 150px;
   background-color: white;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  transition: opacity 1s ease;
+  transition: opacity 0.5s ease;
   opacity: ${(props) => (props.animation === 'animated' ? '1' : '0')};
 `;
 

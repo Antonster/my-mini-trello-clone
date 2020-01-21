@@ -13,7 +13,7 @@ import crossImg from '../../../../assets/cross.svg';
 const CreationForm = styled.form`
   position: relative;
   padding: 0 5px;
-  transition: transform 200ms ease-in-out, opacity 1s ease;
+  transition: transform 200ms ease-in-out, opacity 0.8s ease;
   opacity: ${(props) => (props.animation === 'animated' ? '1' : '0')};
 `;
 

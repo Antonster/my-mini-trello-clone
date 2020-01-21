@@ -19,7 +19,7 @@ const ListForm = styled.form`
   padding: 10px;
   background-color: white;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  transition: transform 200ms ease-in-out, opacity 1s ease;
+  transition: transform 200ms ease-in-out, opacity 0.8s ease;
   opacity: ${(props) => (props.animation === 'animated' ? '1' : '0')};
 
   @media screen and (max-width: 1024px) {
