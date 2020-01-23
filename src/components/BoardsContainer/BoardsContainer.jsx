@@ -8,6 +8,7 @@ import BoardCreationButton from './BoardCreation/BoardCreationButton';
 import BoardCreationForm from './BoardCreation/BoardCreationForm';
 import {
   setNewBoardAction,
+  removeBoardAction,
   getBoardsListAction,
 } from '../../actions/actionsCreators';
 
@@ -40,9 +41,19 @@ class BoardsContainer extends React.Component {
     setNewBoard(false);
   };
 
+  onDeleteBoardCLick = (event) => {
+    const { id } = event.target;
+    const { removeBoard } = this.props;
+
+    removeBoard({
+      activeBoardId: id.substring(7),
+    });
+  };
+
   render() {
     const {
       showResults,
+      onDeleteBoardCLick,
       props: { newBoard, boardsList },
     } = this;
 
@@ -51,7 +62,12 @@ class BoardsContainer extends React.Component {
         <InnerContainer>
           {boardsList &&
             boardsList.map(({ boardName, boardId }) => (
-              <Board boardName={boardName} boardId={boardId} key={boardId} />
+              <Board
+                boardName={boardName}
+                onDeleteBoardCLick={onDeleteBoardCLick}
+                boardId={boardId}
+                key={boardId}
+              />
             ))}
           {newBoard ? (
             <BoardCreationForm onSubmit={showResults} />
@@ -68,6 +84,7 @@ const mapStateToProps = (state) => state;
 
 const mapDispatchToProps = (dispatch) => ({
   setNewBoard: (status) => dispatch(setNewBoardAction(status)),
+  removeBoard: (data) => dispatch(removeBoardAction(data)),
   getBoardsList: (boardData) => dispatch(getBoardsListAction(boardData)),
 });
 
@@ -76,6 +93,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(BoardsContainer);
 BoardsContainer.propTypes = {
   boardsList: PropTypes.array.isRequired,
   setNewBoard: PropTypes.func.isRequired,
+  removeBoard: PropTypes.func.isRequired,
   getBoardsList: PropTypes.func.isRequired,
   newBoard: PropTypes.bool.isRequired,
 };

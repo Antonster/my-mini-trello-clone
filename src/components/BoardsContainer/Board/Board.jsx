@@ -3,18 +3,14 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const NavItem = styled(Link)`
+const NavItem = styled.div`
+  position: relative;
   text-align: center;
-  word-break: break-word;
   width: calc(33.3% - 20px);
   margin: 10px;
-  padding: 55px 20px;
   border-radius: 5px;
   background-color: white;
-  color: #333;
-  font-size: 1.5rem;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  text-decoration: none;
   transition: transform 200ms ease-in-out, opacity 0.8s ease;
   opacity: ${(props) => (props.animation === 'animated' ? '1' : '0')};
 
@@ -28,6 +24,32 @@ const NavItem = styled(Link)`
 
   @media screen and (max-width: 768px) {
     width: 100%;
+  }
+`;
+
+const CustomLink = styled(Link)`
+  display: block;
+  width: 100%;
+  padding: 55px 20px;
+  word-break: break-word;
+  color: #333;
+  font-size: 1.5rem;
+  border-radius: 5px;
+  text-decoration: none;
+`;
+
+const DeleteButton = styled.button`
+  position: absolute;
+  font-size: 2rem;
+  border-radius: 5px;
+  right: 0;
+  top: 0;
+  background: none;
+  color: rgba(0, 0, 0, 0.2);
+  transition: transform 200ms ease-in-out;
+
+  &:hover {
+    transform: scale(1.1);
   }
 `;
 
@@ -52,13 +74,20 @@ class Board extends React.Component {
 
   render() {
     const {
-      props: { boardId, boardName },
+      props: { boardId, boardName, onDeleteBoardCLick },
       state: { animation },
     } = this;
 
     return (
-      <NavItem to={`/board/${boardId}`} id={boardId} animation={animation}>
-        {boardName}
+      <NavItem id={boardId} animation={animation}>
+        <CustomLink to={`/board/${boardId}`}>{boardName}</CustomLink>
+        <DeleteButton
+          id={`button:${boardId}`}
+          type="button"
+          onClick={onDeleteBoardCLick}
+        >
+          ✘
+        </DeleteButton>
       </NavItem>
     );
   }
@@ -67,6 +96,7 @@ class Board extends React.Component {
 export default Board;
 
 Board.propTypes = {
-  boardName: PropTypes.string.isRequired,
   boardId: PropTypes.string.isRequired,
+  boardName: PropTypes.string.isRequired,
+  onDeleteBoardCLick: PropTypes.func.isRequired,
 };

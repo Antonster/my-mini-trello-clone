@@ -10,6 +10,7 @@ import {
   ALL_IN_WORK,
   REMOVE_READY,
   REMOVE_LIST,
+  REMOVE_BOARD,
   TASK_DRAG_HAPPENED,
 } from '../constants';
 
@@ -85,6 +86,11 @@ export const removeListAction = ({ activeBoardId, activeTasksListId }) => ({
   type: REMOVE_LIST,
   activeBoardId,
   activeTasksListId,
+});
+
+export const removeBoardAction = ({ activeBoardId }) => ({
+  type: REMOVE_BOARD,
+  activeBoardId,
 });
 
 export const taskDragHappenedAction = ({

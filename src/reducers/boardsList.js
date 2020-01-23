@@ -7,6 +7,7 @@ import {
   ALL_IN_WORK,
   REMOVE_READY,
   REMOVE_LIST,
+  REMOVE_BOARD,
   TASK_DRAG_HAPPENED,
 } from '../constants';
 
@@ -175,6 +176,13 @@ export default (state = initialState, action) => {
           };
         }
         return board;
+      });
+    }
+    case REMOVE_BOARD: {
+      const { activeBoardId } = action;
+
+      return state.filter((board) => {
+        return board.boardId !== activeBoardId;
       });
     }
     case TASK_DRAG_HAPPENED: {
