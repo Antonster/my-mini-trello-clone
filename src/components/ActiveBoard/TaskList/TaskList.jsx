@@ -11,10 +11,6 @@ import ListMenu from './ListMenu/ListMenu';
 import {
   createNewTaskAction,
   setTaskStatusAction,
-  allReadyAction,
-  allInWorkAction,
-  removeReadyAction,
-  removeListAction,
 } from '../../../actions/actionsCreators';
 import menuImg from '../../../assets/menu.png';
 
@@ -164,49 +160,15 @@ class TaskList extends React.Component {
   onListMenuClick = (event) => {
     const {
       activeTasksList: { listId },
-      props: {
-        allReady,
-        allInWork,
-        removeReady,
-        removeList,
-        activeBoard: { boardId },
-      },
     } = this;
     const {
       target: { id },
     } = event;
-
-    switch (id) {
-      case 'all_ready': {
-        allReady({
-          activeBoardId: boardId,
-          activeTasksListId: listId,
-        });
-        break;
-      }
-      case 'all_in_work': {
-        allInWork({
-          activeBoardId: boardId,
-          activeTasksListId: listId,
-        });
-        break;
-      }
-      case 'remove_ready': {
-        removeReady({
-          activeBoardId: boardId,
-          activeTasksListId: listId,
-        });
-        break;
-      }
-      case 'remove_list': {
-        removeList({
-          activeBoardId: boardId,
-          activeTasksListId: listId,
-        });
-        break;
-      }
-      default:
-    }
+    const data = {
+      eventId: id,
+      activeBoardId: boardId,
+      activeTasksListId: listId,
+    };
   };
 
   mouseEnter = () => {
@@ -237,11 +199,10 @@ class TaskList extends React.Component {
       showNewTaskData,
       newTaskStatus,
       newTaskFormStatus,
-      onListMenuClick,
       mouseEnter,
       mouseLeave,
       state: { taskFormStatus, innerMenuStatus, animation },
-      props: { listName, clearForm, listId },
+      props: { listName, clearForm, listId, onListMenuClick },
       activeTasksList: { tasks },
     } = this;
 
@@ -249,7 +210,9 @@ class TaskList extends React.Component {
       <TasksList animation={animation}>
         <TasksListTitle>{listName}</TasksListTitle>
         <TaskListMenu onFocus={mouseEnter} onBlur={mouseLeave}>
-          {innerMenuStatus && <ListMenu onListMenuClick={onListMenuClick} />}
+          {innerMenuStatus && (
+            <ListMenu onListMenuClick={onListMenuClick} listId={listId} />
+          )}
         </TaskListMenu>
         <TasksListSeparator />
         <Droppable droppableId={listId}>
@@ -305,10 +268,6 @@ const mapDispatchToProps = (dispatch) => ({
   clearForm: (formName) => dispatch(reset(formName)),
   createNewTask: (newTaskData) => dispatch(createNewTaskAction(newTaskData)),
   setTaskStatus: (status) => dispatch(setTaskStatusAction(status)),
-  allReady: (data) => dispatch(allReadyAction(data)),
-  allInWork: (data) => dispatch(allInWorkAction(data)),
-  removeReady: (data) => dispatch(removeReadyAction(data)),
-  removeList: (data) => dispatch(removeListAction(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskList);
@@ -320,8 +279,5 @@ TaskList.propTypes = {
   createNewTask: PropTypes.func.isRequired,
   setTaskStatus: PropTypes.func.isRequired,
   clearForm: PropTypes.func.isRequired,
-  allReady: PropTypes.func.isRequired,
-  allInWork: PropTypes.func.isRequired,
-  removeReady: PropTypes.func.isRequired,
-  removeList: PropTypes.func.isRequired,
+  onListMenuClick: PropTypes.func.isRequired,
 };

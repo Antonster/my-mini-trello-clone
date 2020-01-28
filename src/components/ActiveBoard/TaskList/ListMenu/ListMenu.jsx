@@ -71,7 +71,7 @@ class ListMenu extends React.Component {
 
   render() {
     const {
-      props: { onListMenuClick },
+      props: { onListMenuClick, listId },
       state: { animation },
       buttonsData,
     } = this;
@@ -82,7 +82,9 @@ class ListMenu extends React.Component {
           <NavButton
             key={`${item.name}`}
             id={item.id}
-            onClick={onListMenuClick}
+            onClick={(event) => {
+              onListMenuClick(event, listId);
+            }}
           >
             {item.name}
           </NavButton>
@@ -98,4 +100,5 @@ export default connect(mapStateToProps)(ListMenu);
 
 ListMenu.propTypes = {
   onListMenuClick: PropTypes.func.isRequired,
+  listId: PropTypes.string.isRequired,
 };

@@ -45,7 +45,7 @@ const DeleteButton = styled.button`
   right: 0;
   top: 0;
   background: none;
-  color: rgba(0, 0, 0, 0.2);
+  color: rgba(0, 0, 0, 0.1);
   transition: transform 200ms ease-in-out;
 
   &:hover {
@@ -74,7 +74,7 @@ class Board extends React.Component {
 
   render() {
     const {
-      props: { boardId, boardName, onDeleteBoardCLick },
+      props: { boardId, boardName, onDeleteBoardClick },
       state: { animation },
     } = this;
 
@@ -84,7 +84,7 @@ class Board extends React.Component {
         <DeleteButton
           id={`button:${boardId}`}
           type="button"
-          onClick={onDeleteBoardCLick}
+          onClick={onDeleteBoardClick}
         >
           ✘
         </DeleteButton>
@@ -98,5 +98,5 @@ export default Board;
 Board.propTypes = {
   boardId: PropTypes.string.isRequired,
   boardName: PropTypes.string.isRequired,
-  onDeleteBoardCLick: PropTypes.func.isRequired,
+  onDeleteBoardClick: PropTypes.func.isRequired,
 };

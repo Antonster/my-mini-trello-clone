@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import Board from './Board/Board';
 import BoardCreationButton from './BoardCreation/BoardCreationButton';
 import BoardCreationForm from './BoardCreation/BoardCreationForm';
+import ModalWindow from '../ModalWindow/ModalWindow';
 import {
   setNewBoardAction,
   removeBoardAction,
@@ -25,6 +26,15 @@ const InnerContainer = styled.div`
 `;
 
 class BoardsContainer extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      activeModalWindow: false,
+      activeId: '',
+    };
+  }
+
   showResults = ({ boardName }) => {
     const { setNewBoard, getBoardsList } = this.props;
 
@@ -41,30 +51,60 @@ class BoardsContainer extends React.Component {
     setNewBoard(false);
   };
 
-  onDeleteBoardCLick = (event) => {
+  onDeleteBoardClick = (event) => {
     const { id } = event.target;
-    const { removeBoard } = this.props;
+
+    this.setState({
+      activeId: id.substring(7),
+      activeModalWindow: true,
+    });
+  };
+
+  onDeleteBoardAccept = () => {
+    const {
+      props: { removeBoard },
+      state: { activeId },
+    } = this;
 
     removeBoard({
-      activeBoardId: id.substring(7),
+      activeBoardId: activeId,
+    });
+    this.setState({
+      activeModalWindow: false,
+    });
+  };
+
+  onDeleteBoardCancel = () => {
+    this.setState({
+      activeModalWindow: false,
     });
   };
 
   render() {
     const {
       showResults,
-      onDeleteBoardCLick,
+      onDeleteBoardClick,
+      onDeleteBoardAccept,
+      onDeleteBoardCancel,
       props: { newBoard, boardsList },
+      state: { activeModalWindow },
     } = this;
 
     return (
       <BoardsContainerBlock>
+        {activeModalWindow && (
+          <ModalWindow
+            windowMassage="Are you sure?"
+            windowAccept={onDeleteBoardAccept}
+            windowCancel={onDeleteBoardCancel}
+          />
+        )}
         <InnerContainer>
           {boardsList &&
             boardsList.map(({ boardName, boardId }) => (
               <Board
                 boardName={boardName}
-                onDeleteBoardCLick={onDeleteBoardCLick}
+                onDeleteBoardClick={onDeleteBoardClick}
                 boardId={boardId}
                 key={boardId}
               />

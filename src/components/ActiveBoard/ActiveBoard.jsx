@@ -7,12 +7,17 @@ import styled from 'styled-components';
 import TaskList from './TaskList/TaskList';
 import ListCreationButton from './ListCreation/ListCreationButton';
 import ListCreationForm from './ListCreation/ListCreationForm';
+import ModalWindow from '../ModalWindow/ModalWindow';
 import PageNotFound from '../PageNotFound';
 import {
   setNewListAction,
   createNewListAction,
   taskDragHappenedAction,
   setActiveBoardNameAction,
+  allReadyAction,
+  allInWorkAction,
+  removeReadyAction,
+  removeListAction,
 } from '../../actions/actionsCreators';
 
 const BoardContainer = styled.div`
@@ -28,6 +33,16 @@ const InnerContainer = styled.div`
 `;
 
 class ActiveBoard extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      activeModalWindow: false,
+      activeTasksListId: '',
+      eventId: '',
+    };
+  }
+
   componentDidMount() {
     const { setActiveBoardName } = this.props;
 
@@ -81,6 +96,67 @@ class ActiveBoard extends React.Component {
     }
   };
 
+  onListMenuClick = (event, listId) => {
+    const {
+      target: { id },
+    } = event;
+    this.setState({
+      activeModalWindow: true,
+      activeTasksListId: listId,
+      eventId: id,
+    });
+  };
+
+  onListMenuAccept = () => {
+    const {
+      activeBoard: { boardId },
+      props: { allReady, allInWork, removeReady, removeList },
+      state: { eventId, activeTasksListId },
+    } = this;
+    const data = {
+      activeBoardId: boardId,
+      activeTasksListId,
+    };
+
+    switch (eventId) {
+      case 'all_ready': {
+        allReady(data);
+        this.setState({
+          activeModalWindow: false,
+        });
+        break;
+      }
+      case 'all_in_work': {
+        allInWork(data);
+        this.setState({
+          activeModalWindow: false,
+        });
+        break;
+      }
+      case 'remove_ready': {
+        removeReady(data);
+        this.setState({
+          activeModalWindow: false,
+        });
+        break;
+      }
+      case 'remove_list': {
+        removeList(data);
+        this.setState({
+          activeModalWindow: false,
+        });
+        break;
+      }
+      default:
+    }
+  };
+
+  onDeleteBoardCancel = () => {
+    this.setState({
+      activeModalWindow: false,
+    });
+  };
+
   updateActiveBoard = () => {
     const {
       boardsList,
@@ -99,12 +175,23 @@ class ActiveBoard extends React.Component {
       showNewListData,
       activeBoard,
       onDragEnd,
+      onListMenuClick,
+      onListMenuAccept,
+      onDeleteBoardCancel,
       props: { newList },
+      state: { activeModalWindow },
     } = this;
 
     return (
       <DragDropContext onDragEnd={onDragEnd}>
         <BoardContainer>
+          {activeModalWindow && (
+            <ModalWindow
+              windowMassage="Are you sure?"
+              windowAccept={onListMenuAccept}
+              windowCancel={onDeleteBoardCancel}
+            />
+          )}
           {activeBoard ? (
             <InnerContainer>
               {activeBoard.data.map(({ listName, listId }) => (
@@ -113,6 +200,7 @@ class ActiveBoard extends React.Component {
                   key={listId}
                   listName={listName}
                   activeBoard={activeBoard}
+                  onListMenuClick={onListMenuClick}
                 />
               ))}
               {newList ? (
@@ -137,6 +225,10 @@ const mapDispatchToProps = (dispatch) => ({
   createNewList: (listData) => dispatch(createNewListAction(listData)),
   taskDragHappened: (data) => dispatch(taskDragHappenedAction(data)),
   setActiveBoardName: (name) => dispatch(setActiveBoardNameAction(name)),
+  allReady: (data) => dispatch(allReadyAction(data)),
+  allInWork: (data) => dispatch(allInWorkAction(data)),
+  removeReady: (data) => dispatch(removeReadyAction(data)),
+  removeList: (data) => dispatch(removeListAction(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActiveBoard);
@@ -149,4 +241,8 @@ ActiveBoard.propTypes = {
   newList: PropTypes.bool.isRequired,
   boardsList: PropTypes.array.isRequired,
   match: PropTypes.object.isRequired,
+  allReady: PropTypes.func.isRequired,
+  allInWork: PropTypes.func.isRequired,
+  removeReady: PropTypes.func.isRequired,
+  removeList: PropTypes.func.isRequired,
 };
