@@ -27,19 +27,19 @@ self.addEventListener('message', (event) => {
 self.__precacheManifest = [
   {
     "url": "index.html",
-    "revision": "a6ba75110ae299aea9ae1122ffd77933"
+    "revision": "ab84980f0ea332dd78176f86a0edbb1c"
   },
   {
-    "url": "logo192.ec1737a3.png",
-    "revision": "33dbdd0177549353eeeb785d02c294af"
+    "url": "logo192.844572fc.png",
+    "revision": "e61e417385dffea2c47b2fe208a4fc89"
   },
   {
-    "url": "logo512.0169c94f.png",
-    "revision": "917515db74ea8d1aee6a246cfbcc0b45"
+    "url": "logo512.ae802749.png",
+    "revision": "adbef02055c77b708c796f23317926d7"
   },
   {
     "url": "manifest.webmanifest",
-    "revision": "bc1b615fc60e82958f41725bd7d26994"
+    "revision": "82b8f16d2a2580bf208fd609d06e736f"
   },
   {
     "url": "menu.ee9f7366.png",
